@@ -16,10 +16,10 @@
 		DBAFB8A52A09D135007A5C7D /* WGExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DBAFB89A2A09D134007A5C7D /* WGExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DBAFB8B02A09D233007A5C7D /* build_wireguard_go_bridge.sh in Resources */ = {isa = PBXBuildFile; fileRef = DBAFB8AF2A09D233007A5C7D /* build_wireguard_go_bridge.sh */; };
 		DBAFB8B52A09D3E7007A5C7D /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = DBAFB8B42A09D3E7007A5C7D /* WireGuardKit */; };
-		DBAFB8B82A09D664007A5C7D /* Scene+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8B72A09D664007A5C7D /* Scene+.swift */; };
-		DBAFB8BB2A09DF9B007A5C7D /* Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8BA2A09DF9B007A5C7D /* Interface.swift */; };
-		DBAFB8BD2A09DFD6007A5C7D /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8BC2A09DFD6007A5C7D /* Peer.swift */; };
 		DBAFB8C12A09E6EB007A5C7D /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8C02A09E6EB007A5C7D /* UserDefaultsKey.swift */; };
+		DBAFB8CC2A0A1A38007A5C7D /* Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8CB2A0A1A38007A5C7D /* Interface.swift */; };
+		DBAFB8CE2A0A1A3E007A5C7D /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8CD2A0A1A3E007A5C7D /* Peer.swift */; };
+		DBAFB8D12A0A1A49007A5C7D /* Scene+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8D02A0A1A49007A5C7D /* Scene+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,10 +66,10 @@
 		DBAFB8A12A09D135007A5C7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBAFB8A22A09D135007A5C7D /* WGExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WGExtension.entitlements; sourceTree = "<group>"; };
 		DBAFB8AF2A09D233007A5C7D /* build_wireguard_go_bridge.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_wireguard_go_bridge.sh; sourceTree = "<group>"; };
-		DBAFB8B72A09D664007A5C7D /* Scene+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scene+.swift"; sourceTree = "<group>"; };
-		DBAFB8BA2A09DF9B007A5C7D /* Interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interface.swift; sourceTree = "<group>"; };
-		DBAFB8BC2A09DFD6007A5C7D /* Peer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		DBAFB8C02A09E6EB007A5C7D /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
+		DBAFB8CB2A0A1A38007A5C7D /* Interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interface.swift; sourceTree = "<group>"; };
+		DBAFB8CD2A0A1A3E007A5C7D /* Peer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
+		DBAFB8D02A0A1A49007A5C7D /* Scene+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scene+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,9 +115,9 @@
 		DBAFB8862A09CE62007A5C7D /* WireGuardDemo */ = {
 			isa = PBXGroup;
 			children = (
+				DBAFB8CF2A0A1A41007A5C7D /* Extension */,
+				DBAFB8CA2A0A1A30007A5C7D /* Model */,
 				DBAFB8BE2A09E6D4007A5C7D /* Utils */,
-				DBAFB8B92A09DF8C007A5C7D /* Model */,
-				DBAFB8B62A09D655007A5C7D /* Extension */,
 				DBAFB8872A09CE62007A5C7D /* WireGuardDemoApp.swift */,
 				DBAFB8892A09CE62007A5C7D /* ContentView.swift */,
 				DBAFB88B2A09CE63007A5C7D /* Assets.xcassets */,
@@ -161,23 +161,6 @@
 			path = Scripts;
 			sourceTree = "<group>";
 		};
-		DBAFB8B62A09D655007A5C7D /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				DBAFB8B72A09D664007A5C7D /* Scene+.swift */,
-			);
-			path = Extension;
-			sourceTree = "<group>";
-		};
-		DBAFB8B92A09DF8C007A5C7D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				DBAFB8BA2A09DF9B007A5C7D /* Interface.swift */,
-				DBAFB8BC2A09DFD6007A5C7D /* Peer.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		DBAFB8BE2A09E6D4007A5C7D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +175,23 @@
 				DBAFB8C02A09E6EB007A5C7D /* UserDefaultsKey.swift */,
 			);
 			path = Static;
+			sourceTree = "<group>";
+		};
+		DBAFB8CA2A0A1A30007A5C7D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DBAFB8CB2A0A1A38007A5C7D /* Interface.swift */,
+				DBAFB8CD2A0A1A3E007A5C7D /* Peer.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DBAFB8CF2A0A1A41007A5C7D /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				DBAFB8D02A0A1A49007A5C7D /* Scene+.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -324,11 +324,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBAFB88A2A09CE62007A5C7D /* ContentView.swift in Sources */,
+				DBAFB8CE2A0A1A3E007A5C7D /* Peer.swift in Sources */,
+				DBAFB8D12A0A1A49007A5C7D /* Scene+.swift in Sources */,
 				DBAFB8882A09CE62007A5C7D /* WireGuardDemoApp.swift in Sources */,
 				DBAFB8C12A09E6EB007A5C7D /* UserDefaultsKey.swift in Sources */,
-				DBAFB8B82A09D664007A5C7D /* Scene+.swift in Sources */,
-				DBAFB8BB2A09DF9B007A5C7D /* Interface.swift in Sources */,
-				DBAFB8BD2A09DFD6007A5C7D /* Peer.swift in Sources */,
+				DBAFB8CC2A0A1A38007A5C7D /* Interface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
