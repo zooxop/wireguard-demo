@@ -16,6 +16,10 @@
 		DBAFB8A52A09D135007A5C7D /* WGExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DBAFB89A2A09D134007A5C7D /* WGExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DBAFB8B02A09D233007A5C7D /* build_wireguard_go_bridge.sh in Resources */ = {isa = PBXBuildFile; fileRef = DBAFB8AF2A09D233007A5C7D /* build_wireguard_go_bridge.sh */; };
 		DBAFB8B52A09D3E7007A5C7D /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = DBAFB8B42A09D3E7007A5C7D /* WireGuardKit */; };
+		DBAFB8B82A09D664007A5C7D /* Scene+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8B72A09D664007A5C7D /* Scene+.swift */; };
+		DBAFB8BB2A09DF9B007A5C7D /* Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8BA2A09DF9B007A5C7D /* Interface.swift */; };
+		DBAFB8BD2A09DFD6007A5C7D /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8BC2A09DFD6007A5C7D /* Peer.swift */; };
+		DBAFB8C12A09E6EB007A5C7D /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8C02A09E6EB007A5C7D /* UserDefaultsKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +56,7 @@
 /* Begin PBXFileReference section */
 		DBAFB8842A09CE62007A5C7D /* WireGuardDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WireGuardDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBAFB8872A09CE62007A5C7D /* WireGuardDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardDemoApp.swift; sourceTree = "<group>"; };
-		DBAFB8892A09CE62007A5C7D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DBAFB8892A09CE62007A5C7D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		DBAFB88B2A09CE63007A5C7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DBAFB88E2A09CE63007A5C7D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DBAFB8902A09CE63007A5C7D /* WireGuardDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WireGuardDemo.entitlements; sourceTree = "<group>"; };
@@ -62,6 +66,10 @@
 		DBAFB8A12A09D135007A5C7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBAFB8A22A09D135007A5C7D /* WGExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WGExtension.entitlements; sourceTree = "<group>"; };
 		DBAFB8AF2A09D233007A5C7D /* build_wireguard_go_bridge.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_wireguard_go_bridge.sh; sourceTree = "<group>"; };
+		DBAFB8B72A09D664007A5C7D /* Scene+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scene+.swift"; sourceTree = "<group>"; };
+		DBAFB8BA2A09DF9B007A5C7D /* Interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interface.swift; sourceTree = "<group>"; };
+		DBAFB8BC2A09DFD6007A5C7D /* Peer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
+		DBAFB8C02A09E6EB007A5C7D /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +115,9 @@
 		DBAFB8862A09CE62007A5C7D /* WireGuardDemo */ = {
 			isa = PBXGroup;
 			children = (
+				DBAFB8BE2A09E6D4007A5C7D /* Utils */,
+				DBAFB8B92A09DF8C007A5C7D /* Model */,
+				DBAFB8B62A09D655007A5C7D /* Extension */,
 				DBAFB8872A09CE62007A5C7D /* WireGuardDemoApp.swift */,
 				DBAFB8892A09CE62007A5C7D /* ContentView.swift */,
 				DBAFB88B2A09CE63007A5C7D /* Assets.xcassets */,
@@ -148,6 +159,39 @@
 				DBAFB8AF2A09D233007A5C7D /* build_wireguard_go_bridge.sh */,
 			);
 			path = Scripts;
+			sourceTree = "<group>";
+		};
+		DBAFB8B62A09D655007A5C7D /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				DBAFB8B72A09D664007A5C7D /* Scene+.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		DBAFB8B92A09DF8C007A5C7D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DBAFB8BA2A09DF9B007A5C7D /* Interface.swift */,
+				DBAFB8BC2A09DFD6007A5C7D /* Peer.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DBAFB8BE2A09E6D4007A5C7D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DBAFB8BF2A09E6DE007A5C7D /* Static */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		DBAFB8BF2A09E6DE007A5C7D /* Static */ = {
+			isa = PBXGroup;
+			children = (
+				DBAFB8C02A09E6EB007A5C7D /* UserDefaultsKey.swift */,
+			);
+			path = Static;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,6 +325,10 @@
 			files = (
 				DBAFB88A2A09CE62007A5C7D /* ContentView.swift in Sources */,
 				DBAFB8882A09CE62007A5C7D /* WireGuardDemoApp.swift in Sources */,
+				DBAFB8C12A09E6EB007A5C7D /* UserDefaultsKey.swift in Sources */,
+				DBAFB8B82A09D664007A5C7D /* Scene+.swift in Sources */,
+				DBAFB8BB2A09DF9B007A5C7D /* Interface.swift in Sources */,
+				DBAFB8BD2A09DFD6007A5C7D /* Peer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
