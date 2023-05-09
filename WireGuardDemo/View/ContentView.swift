@@ -8,35 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var interface: Interface
-    @State var peer: Peer
+    @StateObject var viewModel: ContentViewModel = ContentViewModel()
     @State var showAlert: Bool = false
-    
-    init() {
-        let privateKey = UserDefaults.standard.string(forKey: UserDefaultsKey.interPrivateKey) ?? ""
-        let address = UserDefaults.standard.string(forKey: UserDefaultsKey.interAddress) ?? ""
-        let dns = UserDefaults.standard.string(forKey: UserDefaultsKey.interDNS) ?? "8.8.8.8"
-
-        let publicKey = UserDefaults.standard.string(forKey: UserDefaultsKey.peerPublicKey) ?? ""
-        let allowedIPs = UserDefaults.standard.string(forKey: UserDefaultsKey.peerAllowedIPs) ?? "0.0.0.0/0"
-        let endpoint = UserDefaults.standard.string(forKey: UserDefaultsKey.peerEndpoint) ?? ""
-        
-        interface = Interface(privateKey: privateKey,
-                              address: address,
-                              dns: dns)
-        peer = Peer(publicKey: publicKey,
-                    allowedIPs: allowedIPs,
-                    endPoint: endpoint)
-    }
-    
-    private func saveConfig() {
-        UserDefaults.standard.set(interface.privateKey, forKey: UserDefaultsKey.interPrivateKey)
-        UserDefaults.standard.set(interface.address, forKey: UserDefaultsKey.interAddress)
-        UserDefaults.standard.set(interface.dns, forKey: UserDefaultsKey.interDNS)
-        UserDefaults.standard.set(peer.publicKey, forKey: UserDefaultsKey.peerPublicKey)
-        UserDefaults.standard.set(peer.allowedIPs, forKey: UserDefaultsKey.peerAllowedIPs)
-        UserDefaults.standard.set(peer.endPoint, forKey: UserDefaultsKey.peerEndpoint)
-    }
     
     var body: some View {
         ZStack {
@@ -44,20 +17,20 @@ struct ContentView: View {
             
             VStack {
                 propertyBox("[Interface]") {
-                    boxTextFieldItem("Private Key", text: $interface.privateKey)
-                    boxTextFieldItem("Address", text: $interface.address)
-                    boxTextFieldItem("DNS", text: $interface.dns)
+                    boxTextFieldItem("Private Key", text: $viewModel.interface.privateKey)
+                    boxTextFieldItem("Address", text: $viewModel.interface.address)
+                    boxTextFieldItem("DNS", text: $viewModel.interface.dns)
                 }
                 
                 propertyBox("[Peer]") {
-                    boxTextFieldItem("Public Key", text: $peer.publicKey)
-                    boxTextFieldItem("AllowedIPs", text: $peer.allowedIPs)
-                    boxTextFieldItem("Endpoint", text: $peer.endPoint)
+                    boxTextFieldItem("Public Key", text: $viewModel.peer.publicKey)
+                    boxTextFieldItem("AllowedIPs", text: $viewModel.peer.allowedIPs)
+                    boxTextFieldItem("Endpoint", text: $viewModel.peer.endPoint)
                 }
                 
                 HStack {
                     Button("Save") {
-                        saveConfig()
+                        viewModel.saveConfig()
                         showAlert.toggle()
                     }
                     Spacer()
@@ -65,6 +38,7 @@ struct ContentView: View {
                         
                     } label: {
                         Text("Activate")  // Deactivate
+                            .foregroundColor(.red)
                     }
                 }
                 
