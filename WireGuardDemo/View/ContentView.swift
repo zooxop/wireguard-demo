@@ -35,10 +35,14 @@ struct ContentView: View {
                     }
                     Spacer()
                     Button {
-                        
+                        if viewModel.isConnected == false {
+                            viewModel.startVpn()
+                        } else if viewModel.isConnected == true {
+                            viewModel.stopVpn()
+                        }
                     } label: {
-                        Text("Activate")  // Deactivate
-                            .foregroundColor(.red)
+                        Text(viewModel.isConnected ? "Deactivate" : "Activate")
+                            .foregroundColor(viewModel.isConnected ? .blue : .red)
                     }
                 }
                 
