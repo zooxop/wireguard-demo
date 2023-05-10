@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "wireguard-apple",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/zooxop/wireguard-apple.git",
+      "state" : {
+        "branch" : "10.0.15-26",
+        "revision" : "10da5cfdef362889b438cfbeff867a74e6d717fd"
+      }
+    }
+  ],
+  "version" : 2
+}

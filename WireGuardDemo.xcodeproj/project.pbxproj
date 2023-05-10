@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB1554412A0B87B400BF561E /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB1554402A0B87B400BF561E /* WireGuardKit */; };
 		DBAFB8882A09CE62007A5C7D /* WireGuardDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8872A09CE62007A5C7D /* WireGuardDemoApp.swift */; };
 		DBAFB88A2A09CE62007A5C7D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8892A09CE62007A5C7D /* ContentView.swift */; };
 		DBAFB88C2A09CE63007A5C7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBAFB88B2A09CE63007A5C7D /* Assets.xcassets */; };
@@ -78,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB1554412A0B87B400BF561E /* WireGuardKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +257,7 @@
 			);
 			name = WireGuardDemo;
 			packageProductDependencies = (
+				DB1554402A0B87B400BF561E /* WireGuardKit */,
 			);
 			productName = WireGuardDemo;
 			productReference = DBAFB8842A09CE62007A5C7D /* WireGuardDemo.app */;
@@ -311,6 +314,7 @@
 			);
 			mainGroup = DBAFB87B2A09CE62007A5C7D;
 			packageReferences = (
+				DB15543F2A0B87B400BF561E /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 			);
 			productRefGroup = DBAFB8852A09CE62007A5C7D /* Products */;
 			projectDirPath = "";
@@ -696,6 +700,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DB15543F2A0B87B400BF561E /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/zooxop/wireguard-apple.git";
+			requirement = {
+				branch = "10.0.15-26";
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DB1554402A0B87B400BF561E /* WireGuardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB15543F2A0B87B400BF561E /* XCRemoteSwiftPackageReference "wireguard-apple" */;
+			productName = WireGuardKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DBAFB87C2A09CE62007A5C7D /* Project object */;
 }
