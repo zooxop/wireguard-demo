@@ -11,6 +11,9 @@
 		DB1554432A0C630100BF561E /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1554422A0C630100BF561E /* String+.swift */; };
 		DB1554472A0C633D00BF561E /* TunnelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1554462A0C633D00BF561E /* TunnelConfiguration.swift */; };
 		DB1554492A0C635000BF561E /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB1554482A0C635000BF561E /* WireGuardKit */; };
+		DB15547C2A0C978000BF561E /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB15547B2A0C978000BF561E /* Shared.swift */; };
+		DB15547D2A0C978000BF561E /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB15547B2A0C978000BF561E /* Shared.swift */; };
+		DB15547F2A0CB14200BF561E /* TunnelConfiguration+UapiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB15547E2A0CB14200BF561E /* TunnelConfiguration+UapiConfig.swift */; };
 		DBAFB8882A09CE62007A5C7D /* WireGuardDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8872A09CE62007A5C7D /* WireGuardDemoApp.swift */; };
 		DBAFB88A2A09CE62007A5C7D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8892A09CE62007A5C7D /* ContentView.swift */; };
 		DBAFB88C2A09CE63007A5C7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBAFB88B2A09CE63007A5C7D /* Assets.xcassets */; };
@@ -60,6 +63,8 @@
 /* Begin PBXFileReference section */
 		DB1554422A0C630100BF561E /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		DB1554462A0C633D00BF561E /* TunnelConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelConfiguration.swift; sourceTree = "<group>"; };
+		DB15547B2A0C978000BF561E /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
+		DB15547E2A0CB14200BF561E /* TunnelConfiguration+UapiConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TunnelConfiguration+UapiConfig.swift"; sourceTree = "<group>"; };
 		DBAFB8842A09CE62007A5C7D /* WireGuardDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WireGuardDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBAFB8872A09CE62007A5C7D /* WireGuardDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardDemoApp.swift; sourceTree = "<group>"; };
 		DBAFB8892A09CE62007A5C7D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; wrapsLines = 0; };
@@ -112,13 +117,23 @@
 			isa = PBXGroup;
 			children = (
 				DB1554462A0C633D00BF561E /* TunnelConfiguration.swift */,
+				DB15547E2A0CB14200BF561E /* TunnelConfiguration+UapiConfig.swift */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		DB15547A2A0C977200BF561E /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				DB15547B2A0C978000BF561E /* Shared.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		DBAFB87B2A09CE62007A5C7D = {
 			isa = PBXGroup;
 			children = (
+				DB15547A2A0C977200BF561E /* Shared */,
 				DBAFB8DA2A0A2093007A5C7D /* Packages */,
 				DBAFB8AE2A09D206007A5C7D /* Scripts */,
 				DBAFB8862A09CE62007A5C7D /* WireGuardDemo */,
@@ -383,6 +398,7 @@
 				DBAFB8E32A0A22B4007A5C7D /* ContentViewModel.swift in Sources */,
 				DBAFB8882A09CE62007A5C7D /* WireGuardDemoApp.swift in Sources */,
 				DBAFB8C12A09E6EB007A5C7D /* UserDefaultsKey.swift in Sources */,
+				DB15547C2A0C978000BF561E /* Shared.swift in Sources */,
 				DBAFB8CC2A0A1A38007A5C7D /* Interface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +409,8 @@
 			files = (
 				DB1554432A0C630100BF561E /* String+.swift in Sources */,
 				DB1554472A0C633D00BF561E /* TunnelConfiguration.swift in Sources */,
+				DB15547D2A0C978000BF561E /* Shared.swift in Sources */,
+				DB15547F2A0CB14200BF561E /* TunnelConfiguration+UapiConfig.swift in Sources */,
 				DBAFB8A02A09D135007A5C7D /* PacketTunnelProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

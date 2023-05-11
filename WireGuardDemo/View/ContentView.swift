@@ -11,6 +11,18 @@ struct ContentView: View {
     @StateObject var viewModel: ContentViewModel = ContentViewModel()
     @State var showAlert: Bool = false
     
+    private var inbound: String {
+        return
+            convertBytes(bytes: Double(viewModel.inbound)) + " " +
+            getUnit(bytes: viewModel.inbound)
+    }
+    
+    private var outbound: String {
+        return
+            convertBytes(bytes: Double(viewModel.outbound)) + " " +
+            getUnit(bytes: viewModel.outbound)
+    }
+    
     var body: some View {
         ZStack {
             Color.white.ignoresSafeArea()
@@ -35,6 +47,11 @@ struct ContentView: View {
                     }
                     Spacer()
                     Button {
+                        viewModel.getTransferredByteCount()
+                    } label: {
+                        Text("Bytes")
+                    }
+                    Button {
                         if viewModel.isConnected == false {
                             viewModel.startVpn()
                         } else if viewModel.isConnected == true {
@@ -46,6 +63,14 @@ struct ContentView: View {
                     }
                 }
                 
+                if viewModel.isConnected {
+                    withAnimation {
+                        HStack {
+                            Spacer()
+                            Text("Send : \(self.outbound)\nReceive : \(self.inbound)")
+                        }
+                    }
+                }
                 Spacer()
             }
             .padding(.horizontal, 10)
@@ -94,6 +119,37 @@ struct ContentView: View {
                     
             }
             .frame(maxWidth: WindowSize.fixedSize.width - 120)
+        }
+    }
+    
+    private func convertBytes(bytes: Double) -> String {
+        let kb = 1024.0
+        let mb = kb * kb
+        let gb = mb * kb
+
+        if bytes >= gb {
+            return String(format: "%.2f", bytes/gb)
+        } else if bytes >= mb {
+            return String(format: "%.2f", bytes/mb)
+        } else if bytes >= kb {
+            return String(format: "%.2f", bytes/kb)
+        } else {
+            return "\(Int(bytes))"
+        }
+    }
+    
+    private func getUnit(bytes: Int) -> String {
+        switch bytes {
+        case 0..<1_024:
+            return "Byte"
+        case 1_024..<(1_024 * 1_024):
+            return "KB"
+        case 1_024..<(1_024 * 1_024 * 1_024):
+            return "MB"
+        case (1_024 * 1_024 * 1_024)...Int.max:
+            return "GB"
+        default:
+            return "Byte"
         }
     }
 }

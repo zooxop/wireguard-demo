@@ -14,7 +14,9 @@ enum PacketTunnelProviderError: String, Error {
 }
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
-
+    private var configuration: TunnelConfiguration?
+    private var byteCount: TransferredByteCount?
+    
     private lazy var adapter: WireGuardAdapter = {
         return WireGuardAdapter(with: self) { [weak self] _, message in
             self?.log(message)
@@ -40,6 +42,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             completionHandler(PacketTunnelProviderError.cantParseWgQuickConfig)
             return
         }
+        self.configuration = tunnelConfiguration
 
         adapter.start(tunnelConfiguration: tunnelConfiguration) { [weak self] adapterError in
             guard let self = self else { return }
@@ -70,9 +73,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
-        // Add code here to handle the message.
-        if let handler = completionHandler {
-            handler(messageData)
+        self.getTransferredByteCount { transferredByteCount in
+            completionHandler?(transferredByteCount?.data)
+            self.byteCount = transferredByteCount
         }
     }
 
@@ -84,4 +87,19 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     override func wake() {
         // Add code here to wake up.
     }
+    
+    func getTransferredByteCount(completionHandler: @escaping (TransferredByteCount?) -> Void) {
+        adapter.getRuntimeConfiguration { settings in
+            guard let settings = settings,
+                  let runtimeConfig = try? TunnelConfiguration(fromUapiConfig: settings, basedOn: self.configuration) else {
+                completionHandler(nil)
+                return
+            }
+            let rxBytesTotal = runtimeConfig.peers.reduce(0) { $0 + ($1.rxBytes ?? 0) }
+            let txBytesTotal = runtimeConfig.peers.reduce(0) { $0 + ($1.txBytes ?? 0) }
+            let transferredByteCount = TransferredByteCount(inbound: rxBytesTotal, outbound: txBytesTotal)
+            completionHandler(transferredByteCount)
+        }
+    }
+
 }

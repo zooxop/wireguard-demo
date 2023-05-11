@@ -13,10 +13,19 @@ class ContentViewModel: ObservableObject {
     @Published var interface: Interface
     @Published var peer: Peer
     @Published var isConnected: Bool = false
+    @Published var inbound: Int = 0
+    @Published var outbound: Int = 0
     
     private let appGroup = "AWX77X8V5R.group.example.chmun.WireGuardDemo"
     private let tunnelIdentifier = "example.chmun.WireGuardDemo.WGExtension"
     private let tunnelTitle = "WireGuard Demo App"
+    
+    private var tunnelManager: NETunnelProviderManager?
+    private var timer: Timer? {
+        didSet(oldValue) {
+            oldValue?.invalidate()
+        }
+    }
     
     // MARK: - Initializer
     init() {
@@ -35,6 +44,20 @@ class ContentViewModel: ObservableObject {
         peer = Peer(publicKey: publicKey,
                     allowedIPs: allowedIPs,
                     endPoint: endpoint)
+    }
+    
+    deinit {
+        self.timer = nil
+        self.stopVpn()
+    }
+    
+    enum TunnelMessageCode: UInt8 {
+        case getTransferredByteCount = 0 // Returns TransferredByteCount as Data
+        case getNetworkAddresses = 1 // Returns [String] as JSON
+        case getLog = 2 // Returns UTF-8 string
+        case getConnectedDate = 3 // Returns UInt64 as Data
+
+        var data: Data { Data([rawValue]) }
     }
     
     func saveConfig() {
@@ -60,6 +83,20 @@ class ContentViewModel: ObservableObject {
         """
     }
     
+    private func startUpdating() {
+        let timer = Timer(timeInterval: 1 /*second*/, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            self.getTransferredByteCount()
+        }
+
+        RunLoop.main.add(timer, forMode: .common)
+        self.timer = timer
+    }
+    
+    private func stopUpdating() {
+        self.timer?.invalidate()
+    }
+    
     // MARK: - VPN
     
     /// start Tunneling
@@ -67,6 +104,7 @@ class ContentViewModel: ObservableObject {
         self.turnOnTunnel { isSuccess in
             if isSuccess {
                 self.isConnected = isSuccess
+                self.startUpdating()
             }
         }
     }
@@ -75,6 +113,26 @@ class ContentViewModel: ObservableObject {
     func stopVpn() {
         isConnected = false
         self.turnOffTunnel()
+        self.stopUpdating()
+    }
+    
+    func getTransferredByteCount() {
+        guard let session: NETunnelProviderSession = tunnelManager?.connection as? NETunnelProviderSession else {
+            return
+        }
+        do {
+            try session.sendProviderMessage(TunnelMessageCode.getTransferredByteCount.data) { responseData in
+                
+                guard let responseData = responseData else {
+                    return
+                }
+                let byteCount = TransferredByteCount(from: responseData)
+                self.inbound = Int(byteCount.inbound)
+                self.outbound = Int(byteCount.outbound)
+            }
+        } catch {
+            print(error)
+        }
     }
     
     private func turnOnTunnel(completionHandler: @escaping (Bool) -> Void) {
@@ -143,6 +201,8 @@ class ContentViewModel: ObservableObject {
                     completionHandler(true)
                 }
             }
+            
+            self.tunnelManager = tunnelManager
         }
     }
     
