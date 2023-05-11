@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NetworkExtension
 
 class ContentViewModel: ObservableObject {
     // MARK: - Properties
@@ -15,6 +16,7 @@ class ContentViewModel: ObservableObject {
     
     private let appGroup = "AWX77X8V5R.group.example.chmun.WireGuardDemo"
     private let tunnelIdentifier = "example.chmun.WireGuardDemo.WGExtension"
+    private let tunnelTitle = "WireGuard Demo App"
     
     // MARK: - Initializer
     init() {
@@ -44,17 +46,124 @@ class ContentViewModel: ObservableObject {
         UserDefaults.standard.set(peer.endPoint, forKey: UserDefaultsKey.peerEndpoint)
     }
     
+    func makeWgQuickConfig() -> String {
+        return """
+        [Interface]
+        PrivateKey = \(interface.privateKey)
+        Address = \(interface.address)
+        DNS = \(interface.dns)
+
+        [Peer]
+        PublicKey = \(peer.publicKey)
+        AllowedIPs = \(peer.allowedIPs)
+        Endpoint = \(peer.endPoint)
+        """
+    }
+    
     // MARK: - VPN
     
     /// start Tunneling
-    public func startVpn() {
-        isConnected = true
+    func startVpn() {
+        self.turnOnTunnel { isSuccess in
+            if isSuccess {
+                self.isConnected = isSuccess
+            }
+        }
     }
     
     /// stop Tunneling
-    public func stopVpn() {
-        
+    func stopVpn() {
         isConnected = false
+        self.turnOffTunnel()
     }
     
+    private func turnOnTunnel(completionHandler: @escaping (Bool) -> Void) {
+        // `loadAllFromPreferences`를 통해 iOS(또는 macOS)의 환경설정 메뉴에 tunnel이 세팅되어 있는지 확인.
+        NETunnelProviderManager.loadAllFromPreferences { tunnelManagersInSettings, error in
+            if let error = error {
+                NSLog("Error (loadAllFromPreferences): \(error)")
+                completionHandler(false)
+                return
+            }
+
+            // tunnel이 설치되어 있는 경우는 tunnel을 수정하고, 그렇지 않은 경우는 새로 생성하고 저장.
+            // 설정 화면의 tunnel은 앱 하나당 0 또는 1개만 존재함.
+            let preExistingTunnelManager = tunnelManagersInSettings?.first
+            let tunnelManager = preExistingTunnelManager ?? NETunnelProviderManager()
+            tunnelManager.localizedDescription = self.tunnelTitle  // Setting 화면에서 보이는 Tunnel의 Title
+
+            // 사용자 지정 VPN 프로토콜 구성
+            let protocolConfiguration = NETunnelProviderProtocol()
+
+            // tunnel extension의 Bundle Identifier 설정
+            protocolConfiguration.providerBundleIdentifier = self.tunnelIdentifier
+
+            // Server 주소 설정. (non-nil)
+            // Server의 domain명 또는 IP 주소
+            protocolConfiguration.serverAddress = self.peer.endPoint
+
+            // wgQuickConfig 형식으로 config를 생성
+            let wgQuickConfig = self.makeWgQuickConfig()
+
+            protocolConfiguration.providerConfiguration = [
+                "wgQuickConfig": wgQuickConfig
+            ]
+
+            tunnelManager.protocolConfiguration = protocolConfiguration
+            tunnelManager.isEnabled = true
+
+            // tunnel 설정 저장.
+            // 기존 터널을 수정하거나, 새로운 터널을 생성함.
+            tunnelManager.saveToPreferences { error in
+                if let error = error {
+                    NSLog("Error (saveToPreferences): \(error)")
+                    completionHandler(false)
+                    return
+                }
+                // 유효한 인스턴스 확보를 위한 reloading
+                tunnelManager.loadFromPreferences { error in
+                    if let error = error {
+                        NSLog("Error (loadFromPreferences): \(error)")
+                        completionHandler(false)
+                        return
+                    }
+
+                    // 이 시점에서 터널 구성 완료.
+                    // 터널 시작 시도
+                    do {
+                        NSLog("Starting the tunnel")
+                        guard let session = tunnelManager.connection as? NETunnelProviderSession else {
+                            fatalError("tunnelManager.connection is invalid")
+                        }
+                        try session.startTunnel()
+                    } catch {
+                        NSLog("Error (startTunnel): \(error)")
+                        completionHandler(false)
+                    }
+                    completionHandler(true)
+                }
+            }
+        }
+    }
+    
+    private func turnOffTunnel() {
+        NETunnelProviderManager.loadAllFromPreferences { tunnelManagersInSettings, error in
+            if let error = error {
+                NSLog("Error (loadAllFromPreferences): \(error)")
+                return
+            }
+            if let tunnelManager = tunnelManagersInSettings?.first {
+                guard let session = tunnelManager.connection as? NETunnelProviderSession else {
+                    fatalError("tunnelManager.connection is invalid")
+                }
+                switch session.status {
+                case .connected, .connecting, .reasserting:
+                    NSLog("Stopping the tunnel")
+                    session.stopTunnel()
+                default:
+                    break
+                }
+            }
+        }
+    }
 }

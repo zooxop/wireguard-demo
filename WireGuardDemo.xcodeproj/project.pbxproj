@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		DB1554412A0B87B400BF561E /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB1554402A0B87B400BF561E /* WireGuardKit */; };
+		DB1554432A0C630100BF561E /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1554422A0C630100BF561E /* String+.swift */; };
+		DB1554472A0C633D00BF561E /* TunnelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1554462A0C633D00BF561E /* TunnelConfiguration.swift */; };
+		DB1554492A0C635000BF561E /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB1554482A0C635000BF561E /* WireGuardKit */; };
 		DBAFB8882A09CE62007A5C7D /* WireGuardDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8872A09CE62007A5C7D /* WireGuardDemoApp.swift */; };
 		DBAFB88A2A09CE62007A5C7D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8892A09CE62007A5C7D /* ContentView.swift */; };
 		DBAFB88C2A09CE63007A5C7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBAFB88B2A09CE63007A5C7D /* Assets.xcassets */; };
@@ -55,6 +58,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DB1554422A0C630100BF561E /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		DB1554462A0C633D00BF561E /* TunnelConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelConfiguration.swift; sourceTree = "<group>"; };
 		DBAFB8842A09CE62007A5C7D /* WireGuardDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WireGuardDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBAFB8872A09CE62007A5C7D /* WireGuardDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardDemoApp.swift; sourceTree = "<group>"; };
 		DBAFB8892A09CE62007A5C7D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; wrapsLines = 0; };
@@ -87,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB1554492A0C635000BF561E /* WireGuardKit in Frameworks */,
 				DBAFB89D2A09D135007A5C7D /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,6 +100,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB1554442A0C630500BF561E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				DB1554422A0C630100BF561E /* String+.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		DB1554452A0C632100BF561E /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				DB1554462A0C633D00BF561E /* TunnelConfiguration.swift */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
 		DBAFB87B2A09CE62007A5C7D = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +172,8 @@
 		DBAFB89E2A09D135007A5C7D /* WGExtension */ = {
 			isa = PBXGroup;
 			children = (
+				DB1554452A0C632100BF561E /* Configuration */,
+				DB1554442A0C630500BF561E /* Extension */,
 				DBAFB89F2A09D135007A5C7D /* PacketTunnelProvider.swift */,
 				DBAFB8A12A09D135007A5C7D /* Info.plist */,
 				DBAFB8A22A09D135007A5C7D /* WGExtension.entitlements */,
@@ -278,6 +302,7 @@
 			);
 			name = WGExtension;
 			packageProductDependencies = (
+				DB1554482A0C635000BF561E /* WireGuardKit */,
 			);
 			productName = WGExtension;
 			productReference = DBAFB89A2A09D134007A5C7D /* WGExtension.appex */;
@@ -366,6 +391,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB1554432A0C630100BF561E /* String+.swift in Sources */,
+				DB1554472A0C633D00BF561E /* TunnelConfiguration.swift in Sources */,
 				DBAFB8A02A09D135007A5C7D /* PacketTunnelProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -714,6 +741,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		DB1554402A0B87B400BF561E /* WireGuardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB15543F2A0B87B400BF561E /* XCRemoteSwiftPackageReference "wireguard-apple" */;
+			productName = WireGuardKit;
+		};
+		DB1554482A0C635000BF561E /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DB15543F2A0B87B400BF561E /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
