@@ -46,6 +46,10 @@ struct ContentView: View {
                     }
                 }
                 
+                if viewModel.isConnected {
+                    Text("received : \(viewModel.received) / sent : \(viewModel.sent)")
+                }
+                
                 Spacer()
             }
             .padding(.horizontal, 10)

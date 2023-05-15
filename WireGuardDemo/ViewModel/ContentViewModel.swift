@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import NetworkExtension
+import TunnelKitCore
 import TunnelKitManager
 import TunnelKitWireGuardCore
 import TunnelKitWireGuardManager
@@ -17,12 +19,21 @@ class ContentViewModel: ObservableObject {
     @Published var peer: Peer
     @Published var isConnected: Bool = false
     
+    @Published var received: String = ""
+    @Published var sent: String = ""
+    
     private let appGroup = "AWX77X8V5R.group.example.chmun.WireGuardDemo"
     private let tunnelIdentifier = "example.chmun.WireGuardDemo.WGExtension"
     
     private let vpn = NetworkExtensionVPN()
     private(set) var vpnStatus: VPNStatus = .disconnected
     private var wireguardCfg: WireGuard.ProviderConfiguration?
+    
+    private var timer: Timer? {  // Configuration refresh timer
+        didSet(oldValue) {
+            oldValue?.invalidate()
+        }
+    }
     
     // MARK: - Initializer
     init() {
@@ -82,9 +93,11 @@ class ContentViewModel: ObservableObject {
         switch self.vpnStatus {
         case .connected:
             isConnected = true
+            startUpdating()
             break
         case .disconnected:
             isConnected = false
+            stopUpdating()
         default:
             break
         }
@@ -132,4 +145,65 @@ class ContentViewModel: ObservableObject {
         isConnected = false
     }
     
+    // MARK: - VPN Configuration refresh
+    private func startUpdating() {
+        let timer = Timer(timeInterval: 3 /*second*/, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            self.getTransferredByteCount { isSuccess in
+                if isSuccess == false {
+                    self.stopUpdating()  // 가져오기 실패하면 자동 데이터 갱신 중지
+                }
+            }
+        }
+        RunLoop.main.add(timer, forMode: .common)
+        self.timer = timer
+    }
+    
+    private func stopUpdating() {
+        self.timer?.invalidate()
+    }
+    
+    private func getTransferredByteCount(completionHandler: @escaping (Bool) -> Void) {
+        // `loadAllFromPreferences`를 통해 iOS(또는 macOS)의 환경설정 메뉴에 tunnel이 세팅되어 있는지 확인.
+        NETunnelProviderManager.loadAllFromPreferences { tunnelManagersInSettings, error in
+            if let error = error {
+                SwiftyBeaver.error("loadAllFromPreferences: \(error)")
+                completionHandler(false)
+                return
+            }
+            
+            // tunnel이 설치되어 있는 경우는 tunnel을 수정하고, 그렇지 않은 경우는 새로 생성하고 저장.
+            // 설정 화면의 tunnel은 앱 하나당 0 또는 1개만 존재함.
+            let preExistingTunnelManager = tunnelManagersInSettings?.first
+            let tunnelManager = preExistingTunnelManager ?? NETunnelProviderManager()
+            
+            // 유효한 인스턴스 확보를 위한 reloading
+            tunnelManager.loadFromPreferences { error in
+                if let error = error {
+                    SwiftyBeaver.error("loadFromPreferences: \(error)")
+                    completionHandler(false)
+                    return
+                }
+                
+                do {
+                    guard let session = tunnelManager.connection as? NETunnelProviderSession else {
+                        fatalError("tunnelManager.connection is invalid")
+                    }
+                    
+                    try session.sendProviderMessage(TunnelMessageCode.getTransferredByteCount.data) { responseData in
+                        guard let responseData = responseData else {
+                            return
+                        }
+                        let byteCount = DataCount(from: responseData)
+                        self.received = byteCount.received.description
+                        self.sent = byteCount.sent.description
+                    }
+                } catch {
+                    SwiftyBeaver.error("get Bytes: \(error)")
+                    completionHandler(false)
+                }
+                completionHandler(true)
+            }
+        }
+    }
 }
