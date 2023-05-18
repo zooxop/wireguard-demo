@@ -195,8 +195,8 @@ class ContentViewModel: ObservableObject {
                             return
                         }
                         let byteCount = DataCount(from: responseData)
-                        self.received = byteCount.received.description
-                        self.sent = byteCount.sent.description
+                        self.received = self.bytesToReadableString(Double(byteCount.received))
+                        self.sent = self.bytesToReadableString(Double(byteCount.sent))
                     }
                 } catch {
                     SwiftyBeaver.error("get Bytes: \(error)")
@@ -204,6 +204,22 @@ class ContentViewModel: ObservableObject {
                 }
                 completionHandler(true)
             }
+        }
+    }
+    
+    private func bytesToReadableString(_ bytes: Double) -> String {
+        let kb = 1024.0
+        let mb = kb * kb
+        let gb = mb * kb
+
+        if bytes >= gb {
+            return String(format: "%.2f", bytes/gb) + " GB"
+        } else if bytes >= mb {
+            return String(format: "%.2f", bytes/mb) + " MB"
+        } else if bytes >= kb {
+            return String(format: "%.2f", bytes/kb) + " KB"
+        } else {
+            return "\(Int(bytes)) bytes"
         }
     }
 }

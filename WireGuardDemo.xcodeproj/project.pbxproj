@@ -60,6 +60,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DB13B03A2A1659A500CA1DFC /* tunnelkit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = tunnelkit; path = ../tunnelkit; sourceTree = "<group>"; };
 		DBAFB8842A09CE62007A5C7D /* WireGuardDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WireGuardDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBAFB8872A09CE62007A5C7D /* WireGuardDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardDemoApp.swift; sourceTree = "<group>"; };
 		DBAFB8892A09CE62007A5C7D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; wrapsLines = 0; };
@@ -77,7 +78,6 @@
 		DBAFB8CD2A0A1A3E007A5C7D /* Peer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		DBAFB8D02A0A1A49007A5C7D /* Scene+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scene+.swift"; sourceTree = "<group>"; };
 		DBAFB8E22A0A22B4007A5C7D /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
-		DBEBE2A92A12493900BCEADD /* tunnelkit-zooxop */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "tunnelkit-zooxop"; path = "../tunnelkit-zooxop"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,7 +212,7 @@
 		DBAFB8DA2A0A2093007A5C7D /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				DBEBE2A92A12493900BCEADD /* tunnelkit-zooxop */,
+				DB13B03A2A1659A500CA1DFC /* tunnelkit */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
