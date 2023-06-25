@@ -20,12 +20,12 @@
 		DBAFB8CE2A0A1A3E007A5C7D /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8CD2A0A1A3E007A5C7D /* Peer.swift */; };
 		DBAFB8D12A0A1A49007A5C7D /* Scene+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8D02A0A1A49007A5C7D /* Scene+.swift */; };
 		DBAFB8E32A0A22B4007A5C7D /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8E22A0A22B4007A5C7D /* ContentViewModel.swift */; };
-		DBEBE2AB2A124B7C00BCEADD /* TunnelKitWireGuardAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = DBEBE2AA2A124B7C00BCEADD /* TunnelKitWireGuardAppExtension */; };
-		DBEBE2AD2A124BD000BCEADD /* TunnelKit in Frameworks */ = {isa = PBXBuildFile; productRef = DBEBE2AC2A124BD000BCEADD /* TunnelKit */; };
-		DBEBE2AF2A124C3900BCEADD /* TunnelKitWireGuard in Frameworks */ = {isa = PBXBuildFile; productRef = DBEBE2AE2A124C3900BCEADD /* TunnelKitWireGuard */; };
-		DBEBE2B12A124C3900BCEADD /* TunnelKitWireGuardAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = DBEBE2B02A124C3900BCEADD /* TunnelKitWireGuardAppExtension */; };
-		DBEBE2B52A12667000BCEADD /* TunnelKit in Frameworks */ = {isa = PBXBuildFile; productRef = DBEBE2B42A12667000BCEADD /* TunnelKit */; };
-		DBEBE2B72A12674700BCEADD /* TunnelKitWireGuard in Frameworks */ = {isa = PBXBuildFile; productRef = DBEBE2B62A12674700BCEADD /* TunnelKitWireGuard */; };
+		DBDD048A2A489C9400E81DD9 /* TunnelKit in Frameworks */ = {isa = PBXBuildFile; productRef = DBDD04892A489C9400E81DD9 /* TunnelKit */; };
+		DBDD04922A489C9400E81DD9 /* TunnelKitWireGuard in Frameworks */ = {isa = PBXBuildFile; productRef = DBDD04912A489C9400E81DD9 /* TunnelKitWireGuard */; };
+		DBDD04942A489C9400E81DD9 /* TunnelKitWireGuardAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = DBDD04932A489C9400E81DD9 /* TunnelKitWireGuardAppExtension */; };
+		DBDD04962A489CAD00E81DD9 /* TunnelKit in Frameworks */ = {isa = PBXBuildFile; productRef = DBDD04952A489CAD00E81DD9 /* TunnelKit */; };
+		DBDD04982A489CCB00E81DD9 /* TunnelKitWireGuard in Frameworks */ = {isa = PBXBuildFile; productRef = DBDD04972A489CCB00E81DD9 /* TunnelKitWireGuard */; };
+		DBDD049A2A489D1600E81DD9 /* TunnelKitWireGuardAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = DBDD04992A489D1600E81DD9 /* TunnelKitWireGuardAppExtension */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +60,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		DB13B03A2A1659A500CA1DFC /* tunnelkit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = tunnelkit; path = ../tunnelkit; sourceTree = "<group>"; };
 		DBAFB8842A09CE62007A5C7D /* WireGuardDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WireGuardDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBAFB8872A09CE62007A5C7D /* WireGuardDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardDemoApp.swift; sourceTree = "<group>"; };
 		DBAFB8892A09CE62007A5C7D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; wrapsLines = 0; };
@@ -85,9 +84,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBEBE2AF2A124C3900BCEADD /* TunnelKitWireGuard in Frameworks */,
-				DBEBE2AD2A124BD000BCEADD /* TunnelKit in Frameworks */,
-				DBEBE2B12A124C3900BCEADD /* TunnelKitWireGuardAppExtension in Frameworks */,
+				DBDD04922A489C9400E81DD9 /* TunnelKitWireGuard in Frameworks */,
+				DBDD048A2A489C9400E81DD9 /* TunnelKit in Frameworks */,
+				DBDD04942A489C9400E81DD9 /* TunnelKitWireGuardAppExtension in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,10 +94,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBEBE2B52A12667000BCEADD /* TunnelKit in Frameworks */,
-				DBEBE2AB2A124B7C00BCEADD /* TunnelKitWireGuardAppExtension in Frameworks */,
-				DBEBE2B72A12674700BCEADD /* TunnelKitWireGuard in Frameworks */,
+				DBDD049A2A489D1600E81DD9 /* TunnelKitWireGuardAppExtension in Frameworks */,
+				DBDD04982A489CCB00E81DD9 /* TunnelKitWireGuard in Frameworks */,
 				DBAFB89D2A09D135007A5C7D /* NetworkExtension.framework in Frameworks */,
+				DBDD04962A489CAD00E81DD9 /* TunnelKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,7 +211,6 @@
 		DBAFB8DA2A0A2093007A5C7D /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				DB13B03A2A1659A500CA1DFC /* tunnelkit */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -269,9 +267,9 @@
 			);
 			name = WireGuardDemo;
 			packageProductDependencies = (
-				DBEBE2AC2A124BD000BCEADD /* TunnelKit */,
-				DBEBE2AE2A124C3900BCEADD /* TunnelKitWireGuard */,
-				DBEBE2B02A124C3900BCEADD /* TunnelKitWireGuardAppExtension */,
+				DBDD04892A489C9400E81DD9 /* TunnelKit */,
+				DBDD04912A489C9400E81DD9 /* TunnelKitWireGuard */,
+				DBDD04932A489C9400E81DD9 /* TunnelKitWireGuardAppExtension */,
 			);
 			productName = WireGuardDemo;
 			productReference = DBAFB8842A09CE62007A5C7D /* WireGuardDemo.app */;
@@ -292,9 +290,9 @@
 			);
 			name = WGExtension;
 			packageProductDependencies = (
-				DBEBE2AA2A124B7C00BCEADD /* TunnelKitWireGuardAppExtension */,
-				DBEBE2B42A12667000BCEADD /* TunnelKit */,
-				DBEBE2B62A12674700BCEADD /* TunnelKitWireGuard */,
+				DBDD04952A489CAD00E81DD9 /* TunnelKit */,
+				DBDD04972A489CCB00E81DD9 /* TunnelKitWireGuard */,
+				DBDD04992A489D1600E81DD9 /* TunnelKitWireGuardAppExtension */,
 			);
 			productName = WGExtension;
 			productReference = DBAFB89A2A09D134007A5C7D /* WGExtension.appex */;
@@ -331,6 +329,7 @@
 			);
 			mainGroup = DBAFB87B2A09CE62007A5C7D;
 			packageReferences = (
+				DBDD04882A489C9400E81DD9 /* XCRemoteSwiftPackageReference "tunnelkit" */,
 			);
 			productRefGroup = DBAFB8852A09CE62007A5C7D /* Products */;
 			projectDirPath = "";
@@ -717,30 +716,47 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		DBDD04882A489C9400E81DD9 /* XCRemoteSwiftPackageReference "tunnelkit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/zooxop/tunnelkit.git";
+			requirement = {
+				branch = "feature/public-wgadapter";
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		DBEBE2AA2A124B7C00BCEADD /* TunnelKitWireGuardAppExtension */ = {
+		DBDD04892A489C9400E81DD9 /* TunnelKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = TunnelKitWireGuardAppExtension;
-		};
-		DBEBE2AC2A124BD000BCEADD /* TunnelKit */ = {
-			isa = XCSwiftPackageProductDependency;
+			package = DBDD04882A489C9400E81DD9 /* XCRemoteSwiftPackageReference "tunnelkit" */;
 			productName = TunnelKit;
 		};
-		DBEBE2AE2A124C3900BCEADD /* TunnelKitWireGuard */ = {
+		DBDD04912A489C9400E81DD9 /* TunnelKitWireGuard */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = DBDD04882A489C9400E81DD9 /* XCRemoteSwiftPackageReference "tunnelkit" */;
 			productName = TunnelKitWireGuard;
 		};
-		DBEBE2B02A124C3900BCEADD /* TunnelKitWireGuardAppExtension */ = {
+		DBDD04932A489C9400E81DD9 /* TunnelKitWireGuardAppExtension */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = DBDD04882A489C9400E81DD9 /* XCRemoteSwiftPackageReference "tunnelkit" */;
 			productName = TunnelKitWireGuardAppExtension;
 		};
-		DBEBE2B42A12667000BCEADD /* TunnelKit */ = {
+		DBDD04952A489CAD00E81DD9 /* TunnelKit */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = DBDD04882A489C9400E81DD9 /* XCRemoteSwiftPackageReference "tunnelkit" */;
 			productName = TunnelKit;
 		};
-		DBEBE2B62A12674700BCEADD /* TunnelKitWireGuard */ = {
+		DBDD04972A489CCB00E81DD9 /* TunnelKitWireGuard */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = DBDD04882A489C9400E81DD9 /* XCRemoteSwiftPackageReference "tunnelkit" */;
 			productName = TunnelKitWireGuard;
+		};
+		DBDD04992A489D1600E81DD9 /* TunnelKitWireGuardAppExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DBDD04882A489C9400E81DD9 /* XCRemoteSwiftPackageReference "tunnelkit" */;
+			productName = TunnelKitWireGuardAppExtension;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,34 +1,41 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "openssl-apple",
-        "repositoryURL": "https://github.com/passepartoutvpn/openssl-apple",
-        "state": {
-          "branch": null,
-          "revision": "757c074af45e4f2514fe63f649ccdde966183e90",
-          "version": "1.1.11700"
-        }
-      },
-      {
-        "package": "SwiftyBeaver",
-        "repositoryURL": "https://github.com/SwiftyBeaver/SwiftyBeaver",
-        "state": {
-          "branch": null,
-          "revision": "12b5acf96d98f91d50de447369bd18df74600f1a",
-          "version": "1.9.6"
-        }
-      },
-      {
-        "package": "WireGuardKit",
-        "repositoryURL": "https://github.com/passepartoutvpn/wireguard-apple",
-        "state": {
-          "branch": null,
-          "revision": "73d9152fa0cb661db0348a1ac11dbbf998422a50",
-          "version": "1.0.17"
-        }
+  "pins" : [
+    {
+      "identity" : "openssl-apple",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/passepartoutvpn/openssl-apple",
+      "state" : {
+        "revision" : "757c074af45e4f2514fe63f649ccdde966183e90",
+        "version" : "1.1.11700"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "swiftybeaver",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftyBeaver/SwiftyBeaver",
+      "state" : {
+        "revision" : "12b5acf96d98f91d50de447369bd18df74600f1a",
+        "version" : "1.9.6"
+      }
+    },
+    {
+      "identity" : "tunnelkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/zooxop/tunnelkit.git",
+      "state" : {
+        "branch" : "feature/public-wgadapter",
+        "revision" : "7e03abc92d394f323496bb6567121c3d812f5610"
+      }
+    },
+    {
+      "identity" : "wireguard-apple",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/passepartoutvpn/wireguard-apple",
+      "state" : {
+        "revision" : "73d9152fa0cb661db0348a1ac11dbbf998422a50",
+        "version" : "1.0.17"
+      }
+    }
+  ],
+  "version" : 2
 }
