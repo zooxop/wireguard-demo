@@ -5,6 +5,7 @@
 //  Original code from : https://github.com/roop/using-wireguardkit
 //
 
+import Darwin
 import NetworkExtension
 import WireGuardKit
 import SwiftyBeaver
@@ -84,9 +85,21 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
-        self.getTransferredByteCount { transferredByteCount in
-            completionHandler?(transferredByteCount?.data)
-            self.byteCount = transferredByteCount
+        guard messageData.count == 1, let code = TunnelMessageCode(rawValue: messageData[0]) else {
+            completionHandler?(nil)
+            return
+        }
+        switch code {
+        case .getTransferredByteCount:
+            self.getTransferredByteCount { transferredByteCount in
+                completionHandler?(transferredByteCount?.data)
+                self.byteCount = transferredByteCount
+                
+            }
+        case .startProcess:
+            SwiftyBeaver.debug("Just started to process now! And My PID is : \(getpid())")
+        default:
+            return
         }
     }
 

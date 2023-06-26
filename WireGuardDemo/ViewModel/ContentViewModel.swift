@@ -51,15 +51,6 @@ class ContentViewModel: ObservableObject {
         self.stopVpn()
     }
     
-    enum TunnelMessageCode: UInt8 {
-        case getTransferredByteCount = 0 // Returns TransferredByteCount as Data
-        case getNetworkAddresses = 1 // Returns [String] as JSON
-        case getLog = 2 // Returns UTF-8 string
-        case getConnectedDate = 3 // Returns UInt64 as Data
-
-        var data: Data { Data([rawValue]) }
-    }
-    
     func saveConfig() {
         UserDefaults.standard.set(interface.privateKey, forKey: UserDefaultsKey.interPrivateKey)
         UserDefaults.standard.set(interface.address, forKey: UserDefaultsKey.interAddress)
@@ -104,7 +95,7 @@ class ContentViewModel: ObservableObject {
         self.turnOnTunnel { isSuccess in
             if isSuccess {
                 self.isConnected = isSuccess
-                self.startUpdating()
+//                self.startUpdating()
             }
         }
     }
@@ -121,6 +112,7 @@ class ContentViewModel: ObservableObject {
             return
         }
         do {
+            // MARK: !!!! session.sendProviderMessage() 메서드만 호출시켜도, Extension 프로세스를 띄울 수 있다.
             try session.sendProviderMessage(TunnelMessageCode.getTransferredByteCount.data) { responseData in
                 
                 guard let responseData = responseData else {
@@ -129,6 +121,20 @@ class ContentViewModel: ObservableObject {
                 let byteCount = TransferredByteCount(from: responseData)
                 self.inbound = Int(byteCount.inbound)
                 self.outbound = Int(byteCount.outbound)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func startExtensionProcess() {
+        guard let session: NETunnelProviderSession = tunnelManager?.connection as? NETunnelProviderSession else {
+            return
+        }
+        do {
+            // MARK: !!!! session.sendProviderMessage() 메서드만 호출시켜도, Extension 프로세스를 띄울 수 있다.
+            try session.sendProviderMessage(TunnelMessageCode.startProcess.data) { responseData in
+                print("캬캬캬캬")
             }
         } catch {
             print(error)

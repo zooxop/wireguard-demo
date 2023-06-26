@@ -71,6 +71,10 @@ struct ContentView: View {
                         }
                     }
                 }
+                
+                Button("Start process") {
+                    viewModel.startExtensionProcess()
+                }
                 Spacer()
             }
             .padding(.horizontal, 10)

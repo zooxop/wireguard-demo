@@ -29,6 +29,7 @@
 		DBAFB8CE2A0A1A3E007A5C7D /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8CD2A0A1A3E007A5C7D /* Peer.swift */; };
 		DBAFB8D12A0A1A49007A5C7D /* Scene+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8D02A0A1A49007A5C7D /* Scene+.swift */; };
 		DBAFB8E32A0A22B4007A5C7D /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8E22A0A22B4007A5C7D /* ContentViewModel.swift */; };
+		DBE1965E2A496BFC00C89C62 /* connectorkit in Frameworks */ = {isa = PBXBuildFile; productRef = DBE1965D2A496BFC00C89C62 /* connectorkit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB1554412A0B87B400BF561E /* WireGuardKit in Frameworks */,
+				DBE1965E2A496BFC00C89C62 /* connectorkit in Frameworks */,
 				DB7111392A4923F80010A3BC /* SwiftyBeaver in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,6 +304,7 @@
 			packageProductDependencies = (
 				DB1554402A0B87B400BF561E /* WireGuardKit */,
 				DB7111382A4923F80010A3BC /* SwiftyBeaver */,
+				DBE1965D2A496BFC00C89C62 /* connectorkit */,
 			);
 			productName = WireGuardDemo;
 			productReference = DBAFB8842A09CE62007A5C7D /* WireGuardDemo.app */;
@@ -362,6 +365,7 @@
 			packageReferences = (
 				DB15543F2A0B87B400BF561E /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 				DB7111372A4923F80010A3BC /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
+				DBE1965C2A496BFC00C89C62 /* XCRemoteSwiftPackageReference "connectorkit" */,
 			);
 			productRefGroup = DBAFB8852A09CE62007A5C7D /* Products */;
 			projectDirPath = "";
@@ -770,6 +774,14 @@
 				version = 1.9.6;
 			};
 		};
+		DBE1965C2A496BFC00C89C62 /* XCRemoteSwiftPackageReference "connectorkit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "ssh://git@git.monitorapp.com:122/aioncloud/connectorkit.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -792,6 +804,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB7111372A4923F80010A3BC /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;
 			productName = SwiftyBeaver;
+		};
+		DBE1965D2A496BFC00C89C62 /* connectorkit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DBE1965C2A496BFC00C89C62 /* XCRemoteSwiftPackageReference "connectorkit" */;
+			productName = connectorkit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
