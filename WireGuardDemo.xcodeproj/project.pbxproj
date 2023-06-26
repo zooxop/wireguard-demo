@@ -14,6 +14,8 @@
 		DB15547C2A0C978000BF561E /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB15547B2A0C978000BF561E /* Shared.swift */; };
 		DB15547D2A0C978000BF561E /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB15547B2A0C978000BF561E /* Shared.swift */; };
 		DB15547F2A0CB14200BF561E /* TunnelConfiguration+UapiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB15547E2A0CB14200BF561E /* TunnelConfiguration+UapiConfig.swift */; };
+		DB7111392A4923F80010A3BC /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = DB7111382A4923F80010A3BC /* SwiftyBeaver */; };
+		DB71113B2A4923FE0010A3BC /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = DB71113A2A4923FE0010A3BC /* SwiftyBeaver */; };
 		DBAFB8882A09CE62007A5C7D /* WireGuardDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8872A09CE62007A5C7D /* WireGuardDemoApp.swift */; };
 		DBAFB88A2A09CE62007A5C7D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8892A09CE62007A5C7D /* ContentView.swift */; };
 		DBAFB88C2A09CE63007A5C7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBAFB88B2A09CE63007A5C7D /* Assets.xcassets */; };
@@ -90,6 +92,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB1554412A0B87B400BF561E /* WireGuardKit in Frameworks */,
+				DB7111392A4923F80010A3BC /* SwiftyBeaver in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +102,7 @@
 			files = (
 				DB1554492A0C635000BF561E /* WireGuardKit in Frameworks */,
 				DBAFB89D2A09D135007A5C7D /* NetworkExtension.framework in Frameworks */,
+				DB71113B2A4923FE0010A3BC /* SwiftyBeaver in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +301,7 @@
 			name = WireGuardDemo;
 			packageProductDependencies = (
 				DB1554402A0B87B400BF561E /* WireGuardKit */,
+				DB7111382A4923F80010A3BC /* SwiftyBeaver */,
 			);
 			productName = WireGuardDemo;
 			productReference = DBAFB8842A09CE62007A5C7D /* WireGuardDemo.app */;
@@ -318,6 +323,7 @@
 			name = WGExtension;
 			packageProductDependencies = (
 				DB1554482A0C635000BF561E /* WireGuardKit */,
+				DB71113A2A4923FE0010A3BC /* SwiftyBeaver */,
 			);
 			productName = WGExtension;
 			productReference = DBAFB89A2A09D134007A5C7D /* WGExtension.appex */;
@@ -355,6 +361,7 @@
 			mainGroup = DBAFB87B2A09CE62007A5C7D;
 			packageReferences = (
 				DB15543F2A0B87B400BF561E /* XCRemoteSwiftPackageReference "wireguard-apple" */,
+				DB7111372A4923F80010A3BC /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 			);
 			productRefGroup = DBAFB8852A09CE62007A5C7D /* Products */;
 			projectDirPath = "";
@@ -755,6 +762,14 @@
 				kind = branch;
 			};
 		};
+		DB7111372A4923F80010A3BC /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyBeaver/SwiftyBeaver.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -767,6 +782,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB15543F2A0B87B400BF561E /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
+		};
+		DB7111382A4923F80010A3BC /* SwiftyBeaver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB7111372A4923F80010A3BC /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;
+			productName = SwiftyBeaver;
+		};
+		DB71113A2A4923FE0010A3BC /* SwiftyBeaver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB7111372A4923F80010A3BC /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;
+			productName = SwiftyBeaver;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
