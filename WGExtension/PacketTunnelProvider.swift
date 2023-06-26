@@ -7,6 +7,7 @@
 
 import NetworkExtension
 import WireGuardKit
+import SwiftyBeaver
 
 enum PacketTunnelProviderError: String, Error {
     case invalidProtocolConfiguration
@@ -22,6 +23,16 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             self?.log(message)
         }
     }()
+    
+    override init() {
+        super.init()
+        // SwiftyBeaver
+        let platform = SBPlatformDestination(appID: "Ybnqk9",
+                                             appSecret: "0uwcgsvlHm7t3xR3owHw7AWKlr9zRjln",
+                                             encryptionKey: "byqgrigef1ym3aWroozlAkkNAm1nnCwf")
+
+        SwiftyBeaver.addDestination(platform)
+    }
 
     func log(_ message: String) {
         NSLog("WireGuard Tunnel: %@\n", message)
