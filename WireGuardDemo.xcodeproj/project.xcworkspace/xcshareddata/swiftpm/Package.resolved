@@ -1,15 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "connectorkit",
-      "kind" : "remoteSourceControl",
-      "location" : "ssh://git@git.monitorapp.com:122/aioncloud/connectorkit.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "27b1a1cc38f12e3d837d0162dba1f3f67d9b1a75"
-      }
-    },
-    {
       "identity" : "swiftybeaver",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SwiftyBeaver/SwiftyBeaver.git",
@@ -23,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/zooxop/wireguard-apple.git",
       "state" : {
-        "branch" : "10.0.15-26",
-        "revision" : "10da5cfdef362889b438cfbeff867a74e6d717fd"
+        "revision" : "10da5cfdef362889b438cfbeff867a74e6d717fd",
+        "version" : "1.0.15"
       }
     }
   ],
