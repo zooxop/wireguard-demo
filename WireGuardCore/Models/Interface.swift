@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Interface {
+public struct Interface {
     var privateKey: String
     var address: String
     var dns: String
