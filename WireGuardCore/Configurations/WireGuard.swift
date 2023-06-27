@@ -6,22 +6,51 @@
 //
 
 import Foundation
+import SwiftyBeaver
 
-public protocol WireGuardDelegate {
+public class WireGuardInterface: WireGuard {
+    public var appGroup: String
+    public var tunnelIdentifier: String
+    public var tunnelTitle: String
     
+    init(appGroup: String, tunnelIdentifier: String, tunnelTitle: String) {
+        self.appGroup = appGroup
+        self.tunnelIdentifier = tunnelIdentifier
+        self.tunnelTitle = tunnelTitle
+    }
+    
+    public var interface: Interface? {
+        if privateKey == "" || address == "" || dns == "" {
+            SwiftyBeaver.info("Interface information has something wrong.")
+            return nil
+        }
+        
+        return Interface(privateKey: privateKey,
+                         address: address,
+                         dns: dns)
+    }
+    public var peer: Peer? {
+        if publicKey == "" || allowedIPs == "" || endPoint == "" {
+            SwiftyBeaver.info("Peer information has something wrong.")
+            return nil
+        }
+        
+        return Peer(publicKey: publicKey,
+                    allowedIPs: allowedIPs,
+                    endPoint: endPoint)
+    }
 }
 
 public protocol WireGuard {
     var appGroup: String { get set }
     var tunnelIdentifier: String { get set }
     var tunnelTitle: String { get set }
-    
-//    var interface: Interface? { get set }
-//    var peer: Peer? { get set }
+    var interface: Interface? { get }
+    var peer: Peer? { get }
 }
 
 extension WireGuard {
-    private var defaults: UserDefaults? {
+    public var defaults: UserDefaults? {
         return UserDefaults(suiteName: appGroup)
     }
 }

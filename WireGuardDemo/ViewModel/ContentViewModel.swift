@@ -5,7 +5,7 @@
 //  Created by 문철현 on 2023/05/09.
 //
 
-import SwiftUI
+import Foundation
 import NetworkExtension
 import SwiftyBeaver
 
@@ -16,6 +16,7 @@ class ContentViewModel: ObservableObject {
     @Published var inbound: Int = 0
     @Published var outbound: Int = 0
     
+    public var wireGuard: WireGuard
     private let appGroup = "AWX77X8V5R.group.example.chmun.WireGuardDemo"
     private let tunnelIdentifier = "example.chmun.WireGuardDemo.WGExtension"
     private let tunnelTitle = "WireGuard Demo App"
@@ -25,9 +26,10 @@ class ContentViewModel: ObservableObject {
     
     // MARK: - Initializer
     init() {
-        self.vpnManager = VPNManager(appGroup: appGroup,
-                                     tunnelIdentifier: tunnelIdentifier,
-                                     tunnelTitle: tunnelTitle)
+        self.wireGuard = WireGuardInterface(appGroup: appGroup,
+                                            tunnelIdentifier: tunnelIdentifier,
+                                            tunnelTitle: tunnelTitle)
+        self.vpnManager = VPNManager(wireGuard: self.wireGuard)
         
         self.runtimeUpdater = RuntimeUpdater(timeInterval: 3) { [self] in
             getTransferredByteCount()
@@ -43,15 +45,6 @@ class ContentViewModel: ObservableObject {
         self.runtimeUpdater = nil
         self.stopVpn()
     }
-    
-//    func saveConfig() {
-//        UserDefaults.standard.set(interface.privateKey, forKey: UserDefaultsKey.interPrivateKey)
-//        UserDefaults.standard.set(interface.address, forKey: UserDefaultsKey.interAddress)
-//        UserDefaults.standard.set(interface.dns, forKey: UserDefaultsKey.interDNS)
-//        UserDefaults.standard.set(peer.publicKey, forKey: UserDefaultsKey.peerPublicKey)
-//        UserDefaults.standard.set(peer.allowedIPs, forKey: UserDefaultsKey.peerAllowedIPs)
-//        UserDefaults.standard.set(peer.endPoint, forKey: UserDefaultsKey.peerEndpoint)
-//    }
     
     // MARK: - VPN
     
@@ -108,6 +101,12 @@ class ContentViewModel: ObservableObject {
     }
     
     private func turnOnTunnel(completionHandler: @escaping (Bool) -> Void) {
+        guard let interface = wireGuard.interface,
+              let peer = wireGuard.peer
+        else {
+            completionHandler(false)
+            return
+        }
         // `loadAllFromPreferences`를 통해 iOS(또는 macOS)의 환경설정 메뉴에 tunnel이 세팅되어 있는지 확인.
         NETunnelProviderManager.loadAllFromPreferences { tunnelManagersInSettings, error in
             if let error = error {
@@ -130,10 +129,12 @@ class ContentViewModel: ObservableObject {
 
             // Server 주소 설정. (non-nil)
             // Server의 domain명 또는 IP 주소
-            protocolConfiguration.serverAddress = self.vpnManager.endPoint
+            protocolConfiguration.serverAddress = self.wireGuard.endPoint
 
             // wgQuickConfig 형식으로 config를 생성
-            guard let wgQuickConfig = self.vpnManager.makeWgQuickConfig() else {
+            
+            let builder = WireGuardConfigBuilder(interface: interface, peer: peer)
+            guard let wgQuickConfig = builder.build() else {
                 SwiftyBeaver.warning("make wgQuickConfig is failed")
                 return
             }

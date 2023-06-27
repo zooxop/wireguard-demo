@@ -28,15 +28,15 @@ struct ContentView: View {
             
             VStack {
                 propertyBox("[Interface]") {
-                    boxTextFieldItem("Private Key", text: $viewModel.vpnManager.privateKey)
-                    boxTextFieldItem("Address", text: $viewModel.vpnManager.address)
-                    boxTextFieldItem("DNS", text: $viewModel.vpnManager.dns)
+                    boxTextFieldItem("Private Key", text: $viewModel.wireGuard.privateKey)
+                    boxTextFieldItem("Address", text: $viewModel.wireGuard.address)
+                    boxTextFieldItem("DNS", text: $viewModel.wireGuard.dns)
                 }
                 
                 propertyBox("[Peer]") {
-                    boxTextFieldItem("Public Key", text: $viewModel.vpnManager.publicKey)
-                    boxTextFieldItem("AllowedIPs", text: $viewModel.vpnManager.allowedIPs)
-                    boxTextFieldItem("Endpoint", text: $viewModel.vpnManager.endPoint)
+                    boxTextFieldItem("Public Key", text: $viewModel.wireGuard.publicKey)
+                    boxTextFieldItem("AllowedIPs", text: $viewModel.wireGuard.allowedIPs)
+                    boxTextFieldItem("Endpoint", text: $viewModel.wireGuard.endPoint)
                 }
                 
                 HStack {
@@ -141,11 +141,11 @@ struct ContentView: View {
         case 0..<1_024:
             return "Byte"
         case 1_024..<(1_024 * 1_024):
-            return "KB"
+            return "KiB"
         case 1_024..<(1_024 * 1_024 * 1_024):
-            return "MB"
+            return "MiB"
         case (1_024 * 1_024 * 1_024)...Int.max:
-            return "GB"
+            return "GiB"
         default:
             return "Byte"
         }
