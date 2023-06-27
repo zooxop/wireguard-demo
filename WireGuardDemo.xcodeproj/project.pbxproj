@@ -42,6 +42,8 @@
 		DBC3E3372A4AACA700B1F06E /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8C02A09E6EB007A5C7D /* UserDefaultsKey.swift */; };
 		DBC3E3392A4ABDA900B1F06E /* WireGuardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3382A4ABDA900B1F06E /* WireGuardConfig.swift */; };
 		DBC3E33A2A4ABDA900B1F06E /* WireGuardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3382A4ABDA900B1F06E /* WireGuardConfig.swift */; };
+		DBC3E33C2A4ACD1A00B1F06E /* WireGuardInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E33B2A4ACD1A00B1F06E /* WireGuardInterface.swift */; };
+		DBC3E33D2A4ACD1A00B1F06E /* WireGuardInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E33B2A4ACD1A00B1F06E /* WireGuardInterface.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +104,7 @@
 		DBC3E3312A4A60BE00B1F06E /* RuntimeUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeUpdater.swift; sourceTree = "<group>"; };
 		DBC3E3342A4A723F00B1F06E /* VPNManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNManager.swift; sourceTree = "<group>"; };
 		DBC3E3382A4ABDA900B1F06E /* WireGuardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardConfig.swift; sourceTree = "<group>"; };
+		DBC3E33B2A4ACD1A00B1F06E /* WireGuardInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardInterface.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				DBC3E32C2A4A574E00B1F06E /* WireGuard.swift */,
+				DBC3E33B2A4ACD1A00B1F06E /* WireGuardInterface.swift */,
 				DBC3E3382A4ABDA900B1F06E /* WireGuardConfig.swift */,
 				DBAFB8CB2A0A1A38007A5C7D /* Interface.swift */,
 				DBAFB8CD2A0A1A3E007A5C7D /* Peer.swift */,
@@ -440,6 +444,7 @@
 			files = (
 				DBAFB88A2A09CE62007A5C7D /* ContentView.swift in Sources */,
 				DBAFB8CE2A0A1A3E007A5C7D /* Peer.swift in Sources */,
+				DBC3E33C2A4ACD1A00B1F06E /* WireGuardInterface.swift in Sources */,
 				DBC3E3262A4A554200B1F06E /* TunnelMessageCode.swift in Sources */,
 				DBC3E32D2A4A574E00B1F06E /* WireGuard.swift in Sources */,
 				DBAFB8D12A0A1A49007A5C7D /* Scene+.swift in Sources */,
@@ -460,6 +465,7 @@
 			files = (
 				DBC3E3372A4AACA700B1F06E /* UserDefaultsKey.swift in Sources */,
 				DB1554432A0C630100BF561E /* String+.swift in Sources */,
+				DBC3E33D2A4ACD1A00B1F06E /* WireGuardInterface.swift in Sources */,
 				DBC3E32E2A4A574E00B1F06E /* WireGuard.swift in Sources */,
 				DBC3E32B2A4A564100B1F06E /* Peer.swift in Sources */,
 				DB1554472A0C633D00BF561E /* TunnelConfiguration.swift in Sources */,

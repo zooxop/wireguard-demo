@@ -9,20 +9,28 @@ import Foundation
 import NetworkExtension
 import SwiftyBeaver
 
+// TODO: VPNManager 개발
+// TODO: 연결 프로세스를 TunnelProvider에서 실행
+// TODO: 공통 코드들 한곳으로 몰기
 class ContentViewModel: ObservableObject {
-    // MARK: - Properties
+    
+    // MARK: Published
     @Published var vpnManager: VPNManager
     @Published var isConnected: Bool = false
     @Published var inbound: Int = 0
     @Published var outbound: Int = 0
     
-    public var wireGuard: WireGuard
+    // MARK: private let
     private let appGroup = "AWX77X8V5R.group.example.chmun.WireGuardDemo"
     private let tunnelIdentifier = "example.chmun.WireGuardDemo.WGExtension"
     private let tunnelTitle = "WireGuard Demo App"
     
-    private var tunnelManager: NETunnelProviderManager?
+    // MARK: Private var
     private var runtimeUpdater: RuntimeUpdaterProtocol?
+    private var tunnelManager: NETunnelProviderManager?
+    
+    // MARK: Public var
+    public var wireGuard: WireGuard
     
     // MARK: - Initializer
     init() {
