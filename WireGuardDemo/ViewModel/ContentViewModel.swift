@@ -7,11 +7,11 @@
 
 import SwiftUI
 import NetworkExtension
+import SwiftyBeaver
 
 class ContentViewModel: ObservableObject {
     // MARK: - Properties
-    @Published var interface: Interface
-    @Published var peer: Peer
+    @Published var vpnManager: VPNManager
     @Published var isConnected: Bool = false
     @Published var inbound: Int = 0
     @Published var outbound: Int = 0
@@ -25,25 +25,18 @@ class ContentViewModel: ObservableObject {
     
     // MARK: - Initializer
     init() {
-        // 기본 Config 세팅
-        let privateKey = UserDefaults.standard.string(forKey: UserDefaultsKey.interPrivateKey) ?? ""
-        let address = UserDefaults.standard.string(forKey: UserDefaultsKey.interAddress) ?? ""
-        let dns = UserDefaults.standard.string(forKey: UserDefaultsKey.interDNS) ?? "8.8.8.8"
-
-        let publicKey = UserDefaults.standard.string(forKey: UserDefaultsKey.peerPublicKey) ?? ""
-        let allowedIPs = UserDefaults.standard.string(forKey: UserDefaultsKey.peerAllowedIPs) ?? "0.0.0.0/0"
-        let endpoint = UserDefaults.standard.string(forKey: UserDefaultsKey.peerEndpoint) ?? ""
+        self.vpnManager = VPNManager(appGroup: appGroup,
+                                     tunnelIdentifier: tunnelIdentifier,
+                                     tunnelTitle: tunnelTitle)
         
-        interface = Interface(privateKey: privateKey,
-                              address: address,
-                              dns: dns)
-        peer = Peer(publicKey: publicKey,
-                    allowedIPs: allowedIPs,
-                    endPoint: endpoint)
-        
-        self.runtimeUpdater = RuntimeUpdater(timeInterval: 1) { [self] in
+        self.runtimeUpdater = RuntimeUpdater(timeInterval: 3) { [self] in
             getTransferredByteCount()
         }
+        
+        #if DEBUG
+        let console = ConsoleDestination()
+        SwiftyBeaver.addDestination(console)
+        #endif
     }
     
     deinit {
@@ -51,33 +44,20 @@ class ContentViewModel: ObservableObject {
         self.stopVpn()
     }
     
-    func saveConfig() {
-        UserDefaults.standard.set(interface.privateKey, forKey: UserDefaultsKey.interPrivateKey)
-        UserDefaults.standard.set(interface.address, forKey: UserDefaultsKey.interAddress)
-        UserDefaults.standard.set(interface.dns, forKey: UserDefaultsKey.interDNS)
-        UserDefaults.standard.set(peer.publicKey, forKey: UserDefaultsKey.peerPublicKey)
-        UserDefaults.standard.set(peer.allowedIPs, forKey: UserDefaultsKey.peerAllowedIPs)
-        UserDefaults.standard.set(peer.endPoint, forKey: UserDefaultsKey.peerEndpoint)
-    }
-    
-    func makeWgQuickConfig() -> String {
-        return """
-        [Interface]
-        PrivateKey = \(interface.privateKey)
-        Address = \(interface.address)
-        DNS = \(interface.dns)
-
-        [Peer]
-        PublicKey = \(peer.publicKey)
-        AllowedIPs = \(peer.allowedIPs)
-        Endpoint = \(peer.endPoint)
-        """
-    }
+//    func saveConfig() {
+//        UserDefaults.standard.set(interface.privateKey, forKey: UserDefaultsKey.interPrivateKey)
+//        UserDefaults.standard.set(interface.address, forKey: UserDefaultsKey.interAddress)
+//        UserDefaults.standard.set(interface.dns, forKey: UserDefaultsKey.interDNS)
+//        UserDefaults.standard.set(peer.publicKey, forKey: UserDefaultsKey.peerPublicKey)
+//        UserDefaults.standard.set(peer.allowedIPs, forKey: UserDefaultsKey.peerAllowedIPs)
+//        UserDefaults.standard.set(peer.endPoint, forKey: UserDefaultsKey.peerEndpoint)
+//    }
     
     // MARK: - VPN
     
     /// start Tunneling
     func startVpn() {
+        SwiftyBeaver.info("Start VPN")
         self.turnOnTunnel { isSuccess in
             if isSuccess {
                 self.isConnected = isSuccess
@@ -88,7 +68,7 @@ class ContentViewModel: ObservableObject {
     
     /// stop Tunneling
     func stopVpn() {
-        isConnected = false
+        self.isConnected = false
         self.turnOffTunnel()
         self.runtimeUpdater?.stopUpdating()
     }
@@ -150,10 +130,13 @@ class ContentViewModel: ObservableObject {
 
             // Server 주소 설정. (non-nil)
             // Server의 domain명 또는 IP 주소
-            protocolConfiguration.serverAddress = self.peer.endPoint
+            protocolConfiguration.serverAddress = self.vpnManager.endPoint
 
             // wgQuickConfig 형식으로 config를 생성
-            let wgQuickConfig = self.makeWgQuickConfig()
+            guard let wgQuickConfig = self.vpnManager.makeWgQuickConfig() else {
+                SwiftyBeaver.warning("make wgQuickConfig is failed")
+                return
+            }
 
             protocolConfiguration.providerConfiguration = [
                 "wgQuickConfig": wgQuickConfig
@@ -181,7 +164,7 @@ class ContentViewModel: ObservableObject {
                     // 이 시점에서 터널 구성 완료.
                     // 터널 시작 시도
                     do {
-                        NSLog("Starting the tunnel")
+                        SwiftyBeaver.info("Starting the tunnel")
                         guard let session = tunnelManager.connection as? NETunnelProviderSession else {
                             fatalError("tunnelManager.connection is invalid")
                         }
@@ -210,7 +193,9 @@ class ContentViewModel: ObservableObject {
                 }
                 switch session.status {
                 case .connected, .connecting, .reasserting:
-                    NSLog("Stopping the tunnel")
+                    SwiftyBeaver.info("Stopping the tunnel")
+                    self.inbound = 0
+                    self.outbound = 0
                     session.stopTunnel()
                 default:
                     break

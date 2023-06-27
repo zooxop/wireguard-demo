@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftyBeaver
 
 public protocol RuntimeUpdaterProtocol {
     init(timeInterval: TimeInterval, _ event: @escaping () -> Void)
@@ -15,6 +14,8 @@ public protocol RuntimeUpdaterProtocol {
 }
 
 public class RuntimeUpdater: RuntimeUpdaterProtocol {
+    private let timeInterval: TimeInterval
+    private let event: () -> Void
     private var timer: Timer? {
         didSet(oldValue) {
             oldValue?.invalidate()
@@ -22,9 +23,8 @@ public class RuntimeUpdater: RuntimeUpdaterProtocol {
     }
     
     public required init(timeInterval: TimeInterval, _ event: @escaping () -> Void) {
-        self.timer = Timer(timeInterval: timeInterval, repeats: true) { _ in
-            event()
-        }
+        self.timeInterval = timeInterval
+        self.event = event
     }
     
     deinit {
@@ -32,6 +32,9 @@ public class RuntimeUpdater: RuntimeUpdaterProtocol {
     }
     
     public func startUpdating() {
+        self.timer = Timer(timeInterval: self.timeInterval, repeats: true) { _ in
+            self.event()
+        }
         RunLoop.main.add(self.timer!, forMode: .common)
     }
     

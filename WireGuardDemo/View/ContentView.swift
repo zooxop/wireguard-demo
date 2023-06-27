@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel: ContentViewModel = ContentViewModel()
-    @State var showAlert: Bool = false
     
     private var inbound: String {
         return
@@ -29,28 +28,26 @@ struct ContentView: View {
             
             VStack {
                 propertyBox("[Interface]") {
-                    boxTextFieldItem("Private Key", text: $viewModel.interface.privateKey)
-                    boxTextFieldItem("Address", text: $viewModel.interface.address)
-                    boxTextFieldItem("DNS", text: $viewModel.interface.dns)
+                    boxTextFieldItem("Private Key", text: $viewModel.vpnManager.privateKey)
+                    boxTextFieldItem("Address", text: $viewModel.vpnManager.address)
+                    boxTextFieldItem("DNS", text: $viewModel.vpnManager.dns)
                 }
                 
                 propertyBox("[Peer]") {
-                    boxTextFieldItem("Public Key", text: $viewModel.peer.publicKey)
-                    boxTextFieldItem("AllowedIPs", text: $viewModel.peer.allowedIPs)
-                    boxTextFieldItem("Endpoint", text: $viewModel.peer.endPoint)
+                    boxTextFieldItem("Public Key", text: $viewModel.vpnManager.publicKey)
+                    boxTextFieldItem("AllowedIPs", text: $viewModel.vpnManager.allowedIPs)
+                    boxTextFieldItem("Endpoint", text: $viewModel.vpnManager.endPoint)
                 }
                 
                 HStack {
-                    Button("Save") {
-                        viewModel.saveConfig()
-                        showAlert.toggle()
-                    }
-                    Spacer()
                     Button {
                         viewModel.getTransferredByteCount()
                     } label: {
-                        Text("Bytes")
+                        Text("Refresh Bytes")
                     }
+                    
+                    Spacer()
+                    
                     Button {
                         if viewModel.isConnected == false {
                             viewModel.startVpn()
@@ -79,9 +76,6 @@ struct ContentView: View {
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 10)
-        }
-        .alert(isPresented: $showAlert) {
-            Alert(title: Text("Save"), message: Text("Save successful"))
         }
     }
     

@@ -33,10 +33,13 @@
 		DBC3E3272A4A554200B1F06E /* TunnelMessageCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3252A4A554200B1F06E /* TunnelMessageCode.swift */; };
 		DBC3E32A2A4A564000B1F06E /* Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8CB2A0A1A38007A5C7D /* Interface.swift */; };
 		DBC3E32B2A4A564100B1F06E /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8CD2A0A1A3E007A5C7D /* Peer.swift */; };
-		DBC3E32D2A4A574E00B1F06E /* WireGuardConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E32C2A4A574E00B1F06E /* WireGuardConfiguration.swift */; };
-		DBC3E32E2A4A574E00B1F06E /* WireGuardConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E32C2A4A574E00B1F06E /* WireGuardConfiguration.swift */; };
+		DBC3E32D2A4A574E00B1F06E /* WireGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E32C2A4A574E00B1F06E /* WireGuard.swift */; };
+		DBC3E32E2A4A574E00B1F06E /* WireGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E32C2A4A574E00B1F06E /* WireGuard.swift */; };
 		DBC3E3322A4A60BE00B1F06E /* RuntimeUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3312A4A60BE00B1F06E /* RuntimeUpdater.swift */; };
 		DBC3E3332A4A60BE00B1F06E /* RuntimeUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3312A4A60BE00B1F06E /* RuntimeUpdater.swift */; };
+		DBC3E3352A4A723F00B1F06E /* VPNManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3342A4A723F00B1F06E /* VPNManager.swift */; };
+		DBC3E3362A4A723F00B1F06E /* VPNManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3342A4A723F00B1F06E /* VPNManager.swift */; };
+		DBC3E3372A4AACA700B1F06E /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB8C02A09E6EB007A5C7D /* UserDefaultsKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,8 +96,9 @@
 		DBAFB8D02A0A1A49007A5C7D /* Scene+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scene+.swift"; sourceTree = "<group>"; };
 		DBAFB8E22A0A22B4007A5C7D /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		DBC3E3252A4A554200B1F06E /* TunnelMessageCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelMessageCode.swift; sourceTree = "<group>"; };
-		DBC3E32C2A4A574E00B1F06E /* WireGuardConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardConfiguration.swift; sourceTree = "<group>"; };
+		DBC3E32C2A4A574E00B1F06E /* WireGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuard.swift; sourceTree = "<group>"; };
 		DBC3E3312A4A60BE00B1F06E /* RuntimeUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeUpdater.swift; sourceTree = "<group>"; };
+		DBC3E3342A4A723F00B1F06E /* VPNManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,7 +178,6 @@
 				DBAFB8E12A0A229A007A5C7D /* ViewModel */,
 				DBAFB8E02A0A228E007A5C7D /* View */,
 				DBAFB8CF2A0A1A41007A5C7D /* Extension */,
-				DBAFB8BE2A09E6D4007A5C7D /* Utils */,
 				DBAFB8872A09CE62007A5C7D /* WireGuardDemoApp.swift */,
 				DBAFB88B2A09CE63007A5C7D /* Assets.xcassets */,
 				DBAFB8902A09CE63007A5C7D /* WireGuardDemo.entitlements */,
@@ -219,14 +222,6 @@
 			path = Scripts;
 			sourceTree = "<group>";
 		};
-		DBAFB8BE2A09E6D4007A5C7D /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				DBAFB8BF2A09E6DE007A5C7D /* Static */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
 		DBAFB8BF2A09E6DE007A5C7D /* Static */ = {
 			isa = PBXGroup;
 			children = (
@@ -269,32 +264,14 @@
 		DBC3E3242A4A52B200B1F06E /* WireGuardCore */ = {
 			isa = PBXGroup;
 			children = (
-				DBC3E3292A4A563200B1F06E /* Protocols */,
+				DBC3E3292A4A563200B1F06E /* Configurations */,
 				DBC3E3302A4A5F2F00B1F06E /* Utilities */,
-				DBC3E3282A4A562200B1F06E /* Models */,
+				DBC3E3282A4A562200B1F06E /* Format */,
 			);
 			path = WireGuardCore;
 			sourceTree = "<group>";
 		};
-		DBC3E3282A4A562200B1F06E /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				DBC3E32F2A4A575D00B1F06E /* Format */,
-				DBAFB8CB2A0A1A38007A5C7D /* Interface.swift */,
-				DBAFB8CD2A0A1A3E007A5C7D /* Peer.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		DBC3E3292A4A563200B1F06E /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				DBC3E32C2A4A574E00B1F06E /* WireGuardConfiguration.swift */,
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
-		DBC3E32F2A4A575D00B1F06E /* Format */ = {
+		DBC3E3282A4A562200B1F06E /* Format */ = {
 			isa = PBXGroup;
 			children = (
 				DBC3E3252A4A554200B1F06E /* TunnelMessageCode.swift */,
@@ -302,10 +279,22 @@
 			path = Format;
 			sourceTree = "<group>";
 		};
+		DBC3E3292A4A563200B1F06E /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				DBC3E32C2A4A574E00B1F06E /* WireGuard.swift */,
+				DBAFB8CB2A0A1A38007A5C7D /* Interface.swift */,
+				DBAFB8CD2A0A1A3E007A5C7D /* Peer.swift */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
 		DBC3E3302A4A5F2F00B1F06E /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				DBC3E3312A4A60BE00B1F06E /* RuntimeUpdater.swift */,
+				DBC3E3342A4A723F00B1F06E /* VPNManager.swift */,
+				DBAFB8BF2A09E6DE007A5C7D /* Static */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -448,13 +437,14 @@
 				DBAFB88A2A09CE62007A5C7D /* ContentView.swift in Sources */,
 				DBAFB8CE2A0A1A3E007A5C7D /* Peer.swift in Sources */,
 				DBC3E3262A4A554200B1F06E /* TunnelMessageCode.swift in Sources */,
-				DBC3E32D2A4A574E00B1F06E /* WireGuardConfiguration.swift in Sources */,
+				DBC3E32D2A4A574E00B1F06E /* WireGuard.swift in Sources */,
 				DBAFB8D12A0A1A49007A5C7D /* Scene+.swift in Sources */,
 				DBAFB8E32A0A22B4007A5C7D /* ContentViewModel.swift in Sources */,
 				DBC3E3322A4A60BE00B1F06E /* RuntimeUpdater.swift in Sources */,
 				DBAFB8882A09CE62007A5C7D /* WireGuardDemoApp.swift in Sources */,
 				DBAFB8C12A09E6EB007A5C7D /* UserDefaultsKey.swift in Sources */,
 				DB15547C2A0C978000BF561E /* Shared.swift in Sources */,
+				DBC3E3352A4A723F00B1F06E /* VPNManager.swift in Sources */,
 				DBAFB8CC2A0A1A38007A5C7D /* Interface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -463,12 +453,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBC3E3372A4AACA700B1F06E /* UserDefaultsKey.swift in Sources */,
 				DB1554432A0C630100BF561E /* String+.swift in Sources */,
-				DBC3E32E2A4A574E00B1F06E /* WireGuardConfiguration.swift in Sources */,
+				DBC3E32E2A4A574E00B1F06E /* WireGuard.swift in Sources */,
 				DBC3E32B2A4A564100B1F06E /* Peer.swift in Sources */,
 				DB1554472A0C633D00BF561E /* TunnelConfiguration.swift in Sources */,
 				DBC3E3332A4A60BE00B1F06E /* RuntimeUpdater.swift in Sources */,
 				DBC3E3272A4A554200B1F06E /* TunnelMessageCode.swift in Sources */,
+				DBC3E3362A4A723F00B1F06E /* VPNManager.swift in Sources */,
 				DBC3E32A2A4A564000B1F06E /* Interface.swift in Sources */,
 				DB15547D2A0C978000BF561E /* Shared.swift in Sources */,
 				DB15547F2A0CB14200BF561E /* TunnelConfiguration+UapiConfig.swift in Sources */,
