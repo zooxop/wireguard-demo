@@ -21,11 +21,7 @@ class ContentViewModel: ObservableObject {
     private let tunnelTitle = "WireGuard Demo App"
     
     private var tunnelManager: NETunnelProviderManager?
-    private var timer: Timer? {
-        didSet(oldValue) {
-            oldValue?.invalidate()
-        }
-    }
+    private var runtimeUpdater: RuntimeUpdaterProtocol?
     
     // MARK: - Initializer
     init() {
@@ -44,10 +40,14 @@ class ContentViewModel: ObservableObject {
         peer = Peer(publicKey: publicKey,
                     allowedIPs: allowedIPs,
                     endPoint: endpoint)
+        
+        self.runtimeUpdater = RuntimeUpdater(timeInterval: 1) { [self] in
+            getTransferredByteCount()
+        }
     }
     
     deinit {
-        self.timer = nil
+        self.runtimeUpdater = nil
         self.stopVpn()
     }
     
@@ -74,20 +74,6 @@ class ContentViewModel: ObservableObject {
         """
     }
     
-    private func startUpdating() {
-        let timer = Timer(timeInterval: 1 /*second*/, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            self.getTransferredByteCount()
-        }
-
-        RunLoop.main.add(timer, forMode: .common)
-        self.timer = timer
-    }
-    
-    private func stopUpdating() {
-        self.timer?.invalidate()
-    }
-    
     // MARK: - VPN
     
     /// start Tunneling
@@ -95,7 +81,7 @@ class ContentViewModel: ObservableObject {
         self.turnOnTunnel { isSuccess in
             if isSuccess {
                 self.isConnected = isSuccess
-//                self.startUpdating()
+                self.runtimeUpdater?.startUpdating()
             }
         }
     }
@@ -104,7 +90,7 @@ class ContentViewModel: ObservableObject {
     func stopVpn() {
         isConnected = false
         self.turnOffTunnel()
-        self.stopUpdating()
+        self.runtimeUpdater?.stopUpdating()
     }
     
     func getTransferredByteCount() {
@@ -199,7 +185,7 @@ class ContentViewModel: ObservableObject {
                         guard let session = tunnelManager.connection as? NETunnelProviderSession else {
                             fatalError("tunnelManager.connection is invalid")
                         }
-                        try session.startTunnel()
+                        try session.startTunnel()  // MARK: Start Tunneling
                     } catch {
                         NSLog("Error (startTunnel): \(error)")
                         completionHandler(false)

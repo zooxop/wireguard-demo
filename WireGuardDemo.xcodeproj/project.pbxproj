@@ -269,8 +269,8 @@
 		DBC3E3242A4A52B200B1F06E /* WireGuardCore */ = {
 			isa = PBXGroup;
 			children = (
-				DBC3E3302A4A5F2F00B1F06E /* Utilities */,
 				DBC3E3292A4A563200B1F06E /* Protocols */,
+				DBC3E3302A4A5F2F00B1F06E /* Utilities */,
 				DBC3E3282A4A562200B1F06E /* Models */,
 			);
 			path = WireGuardCore;
