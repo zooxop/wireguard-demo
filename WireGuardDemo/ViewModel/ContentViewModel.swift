@@ -9,9 +9,6 @@ import Foundation
 import NetworkExtension
 import SwiftyBeaver
 
-// TODO: VPNManager 개발
-// TODO: 연결 프로세스를 TunnelProvider에서 실행
-// TODO: 공통 코드들 한곳으로 몰기
 class ContentViewModel: ObservableObject {
     
     // MARK: Published

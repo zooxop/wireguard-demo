@@ -15,9 +15,14 @@ enum PacketTunnelProviderError: String, Error {
     case cantParseWgQuickConfig
 }
 
+// TODO: VPN Status Notification
+// TODO: Process를 죽이지 않고 [연결 해제 -> 재연결] 프로세스 구현
 class PacketTunnelProvider: NEPacketTunnelProvider {
     private var configuration: TunnelConfiguration?
     private var byteCount: TransferredByteCount?
+    
+    // MARK: Private var
+    private var persistentTimer: RuntimeUpdaterProtocol?
     
     private lazy var adapter: WireGuardAdapter = {
         return WireGuardAdapter(with: self) { [weak self] _, message in
@@ -33,6 +38,18 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                              encryptionKey: "byqgrigef1ym3aWroozlAkkNAm1nnCwf")
 
         SwiftyBeaver.addDestination(platform)
+        
+        self.persistentTimer = RuntimeUpdater(timeInterval: 5) { [self] in
+            SwiftyBeaver.verbose("I'm alive haha, PID is : \(getpid())")
+            self.wake()
+        }
+        
+        self.persistentTimer?.startUpdating()
+    }
+    
+    deinit {
+        self.persistentTimer?.stopUpdating()
+        self.persistentTimer = nil
     }
 
     func log(_ message: String) {
@@ -94,10 +111,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             self.getTransferredByteCount { transferredByteCount in
                 completionHandler?(transferredByteCount?.data)
                 self.byteCount = transferredByteCount
-                
             }
         case .startProcess:
             SwiftyBeaver.debug("Just started to process now! And My PID is : \(getpid())")
+            completionHandler?(nil)
         default:
             return
         }
@@ -106,10 +123,12 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     override func sleep(completionHandler: @escaping () -> Void) {
         // Add code here to get ready to sleep.
         completionHandler()
+        SwiftyBeaver.info("Here is sleep(), PID is : \(getpid())")
     }
 
     override func wake() {
         // Add code here to wake up.
+        SwiftyBeaver.info("Here is wake(), PID is : \(getpid())")
     }
     
     func getTransferredByteCount(completionHandler: @escaping (TransferredByteCount?) -> Void) {
