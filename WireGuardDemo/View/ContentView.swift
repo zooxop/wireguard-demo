@@ -69,9 +69,15 @@ struct ContentView: View {
                     }
                 }
                 
-                Button("Start process") {
-                    viewModel.startExtensionProcess()
+                VStack {
+                    Button("Install VPN") {
+                        viewModel.installVpnInterface()
+                    }
+                    Button("Start process") {
+                        viewModel.startExtensionProcess()
+                    }
                 }
+                
                 Spacer()
             }
             .padding(.horizontal, 10)

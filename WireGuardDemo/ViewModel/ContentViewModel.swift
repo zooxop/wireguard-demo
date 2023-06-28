@@ -94,18 +94,25 @@ class ContentViewModel: ObservableObject {
         }
     }
     
+    func installVpnInterface() {
+        vpnManager.vpn.install { result in
+            print(result.description)
+        }
+    }
+    
     func startExtensionProcess() {
-        guard let session: NETunnelProviderSession = tunnelManager?.connection as? NETunnelProviderSession else {
-            return
-        }
-        do {
-            // MARK: !!!! session.sendProviderMessage() 메서드만 호출시켜도, Extension 프로세스를 띄울 수 있다.
-            try session.sendProviderMessage(TunnelMessageCode.startProcess.data) { responseData in
-                print("캬캬캬캬")
-            }
-        } catch {
-            print(error)
-        }
+        vpnManager.vpn.prepare()
+//        guard let session: NETunnelProviderSession = tunnelManager?.connection as? NETunnelProviderSession else {
+//            return
+//        }
+//        do {
+//            // MARK: !!!! session.sendProviderMessage() 메서드만 호출시켜도, Extension 프로세스를 띄울 수 있다.
+//            try session.sendProviderMessage(TunnelMessageCode.startProcess.data) { responseData in
+//                print("캬캬캬캬")
+//            }
+//        } catch {
+//            print(error)
+//        }
     }
     
     private func turnOnTunnel(completionHandler: @escaping (Bool) -> Void) {

@@ -44,6 +44,10 @@
 		DBC3E33A2A4ABDA900B1F06E /* WireGuardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3382A4ABDA900B1F06E /* WireGuardConfig.swift */; };
 		DBC3E33C2A4ACD1A00B1F06E /* WireGuardInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E33B2A4ACD1A00B1F06E /* WireGuardInterface.swift */; };
 		DBC3E33D2A4ACD1A00B1F06E /* WireGuardInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E33B2A4ACD1A00B1F06E /* WireGuardInterface.swift */; };
+		DBC3E33F2A4BBE1700B1F06E /* VPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E33E2A4BBE1700B1F06E /* VPN.swift */; };
+		DBC3E3402A4BBE1700B1F06E /* VPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E33E2A4BBE1700B1F06E /* VPN.swift */; };
+		DBC3E3422A4BBF0F00B1F06E /* VPNInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3412A4BBF0F00B1F06E /* VPNInterface.swift */; };
+		DBC3E3432A4BBF0F00B1F06E /* VPNInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3412A4BBF0F00B1F06E /* VPNInterface.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +109,8 @@
 		DBC3E3342A4A723F00B1F06E /* VPNManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNManager.swift; sourceTree = "<group>"; };
 		DBC3E3382A4ABDA900B1F06E /* WireGuardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardConfig.swift; sourceTree = "<group>"; };
 		DBC3E33B2A4ACD1A00B1F06E /* WireGuardInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardInterface.swift; sourceTree = "<group>"; };
+		DBC3E33E2A4BBE1700B1F06E /* VPN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPN.swift; sourceTree = "<group>"; };
+		DBC3E3412A4BBF0F00B1F06E /* VPNInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNInterface.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,6 +297,8 @@
 				DBC3E32C2A4A574E00B1F06E /* WireGuard.swift */,
 				DBC3E33B2A4ACD1A00B1F06E /* WireGuardInterface.swift */,
 				DBC3E3382A4ABDA900B1F06E /* WireGuardConfig.swift */,
+				DBC3E33E2A4BBE1700B1F06E /* VPN.swift */,
+				DBC3E3412A4BBF0F00B1F06E /* VPNInterface.swift */,
 				DBAFB8CB2A0A1A38007A5C7D /* Interface.swift */,
 				DBAFB8CD2A0A1A3E007A5C7D /* Peer.swift */,
 			);
@@ -444,6 +452,7 @@
 			files = (
 				DBAFB88A2A09CE62007A5C7D /* ContentView.swift in Sources */,
 				DBAFB8CE2A0A1A3E007A5C7D /* Peer.swift in Sources */,
+				DBC3E3422A4BBF0F00B1F06E /* VPNInterface.swift in Sources */,
 				DBC3E33C2A4ACD1A00B1F06E /* WireGuardInterface.swift in Sources */,
 				DBC3E3262A4A554200B1F06E /* TunnelMessageCode.swift in Sources */,
 				DBC3E32D2A4A574E00B1F06E /* WireGuard.swift in Sources */,
@@ -454,6 +463,7 @@
 				DBAFB8882A09CE62007A5C7D /* WireGuardDemoApp.swift in Sources */,
 				DBAFB8C12A09E6EB007A5C7D /* UserDefaultsKey.swift in Sources */,
 				DB15547C2A0C978000BF561E /* Shared.swift in Sources */,
+				DBC3E33F2A4BBE1700B1F06E /* VPN.swift in Sources */,
 				DBC3E3352A4A723F00B1F06E /* VPNManager.swift in Sources */,
 				DBAFB8CC2A0A1A38007A5C7D /* Interface.swift in Sources */,
 			);
@@ -465,6 +475,7 @@
 			files = (
 				DBC3E3372A4AACA700B1F06E /* UserDefaultsKey.swift in Sources */,
 				DB1554432A0C630100BF561E /* String+.swift in Sources */,
+				DBC3E3432A4BBF0F00B1F06E /* VPNInterface.swift in Sources */,
 				DBC3E33D2A4ACD1A00B1F06E /* WireGuardInterface.swift in Sources */,
 				DBC3E32E2A4A574E00B1F06E /* WireGuard.swift in Sources */,
 				DBC3E32B2A4A564100B1F06E /* Peer.swift in Sources */,
@@ -475,6 +486,7 @@
 				DBC3E3362A4A723F00B1F06E /* VPNManager.swift in Sources */,
 				DBC3E32A2A4A564000B1F06E /* Interface.swift in Sources */,
 				DB15547D2A0C978000BF561E /* Shared.swift in Sources */,
+				DBC3E3402A4BBE1700B1F06E /* VPN.swift in Sources */,
 				DB15547F2A0CB14200BF561E /* TunnelConfiguration+UapiConfig.swift in Sources */,
 				DBAFB8A02A09D135007A5C7D /* PacketTunnelProvider.swift in Sources */,
 			);
