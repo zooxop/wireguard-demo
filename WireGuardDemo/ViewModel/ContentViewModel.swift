@@ -30,7 +30,7 @@ class ContentViewModel: ObservableObject {
     
     // MARK: - Initializer
     init() {
-        self.wireGuard = WireGuardInterface(appGroup: appGroup,
+        self.wireGuard = WireGuardBuilder(appGroup: appGroup,
                                             tunnelIdentifier: tunnelIdentifier,
                                             tunnelTitle: tunnelTitle)
         self.vpnManager = VPNManager(wireGuard: self.wireGuard)

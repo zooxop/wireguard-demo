@@ -8,7 +8,7 @@
 import Foundation
 import NetworkExtension
 
-public class VPNInterface: VPN {
+public class VPNBuilder: VPN {
     public var tunnelTitle: String
     public var tunnelIdentifier: String
     public var endPoint: String

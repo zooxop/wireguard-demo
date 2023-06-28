@@ -17,7 +17,7 @@ class VPNManager: ObservableObject {
     
     init(wireGuard: WireGuard) {
         self.wireGuard = wireGuard
-        self.vpn = VPNInterface(wireGuard: wireGuard)
+        self.vpn = VPNBuilder(wireGuard: wireGuard)
     }
     
     // MARK: VPN
