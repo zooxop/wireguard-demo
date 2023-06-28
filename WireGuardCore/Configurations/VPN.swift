@@ -141,3 +141,24 @@ extension VPN {
         return false
     }
 }
+
+extension VPN {
+    /// Communicate with a tunnel through `handleAppMessage` in PacketTunnelProvider
+    func handleAppMessage(code: TunnelMessageCode, completion: @escaping (Data?) -> Void) {
+        guard let session: NETunnelProviderSession = tunnelManager?.connection as? NETunnelProviderSession else {
+            completion(nil)
+            return
+        }
+        do {
+            try session.sendProviderMessage(code.data) { responseData in
+                guard let responseData = responseData else {
+                    completion(nil)
+                    return
+                }
+                completion(responseData)
+            }
+        } catch {
+            print(error)
+        }
+    }
+}

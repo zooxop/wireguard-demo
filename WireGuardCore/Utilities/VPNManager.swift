@@ -12,11 +12,6 @@ import SwiftyBeaver
 class VPNManager: ObservableObject {
     var wireGuard: WireGuard
     var vpn: VPN
-//    var wireGuardConfig: WireGuardConfig.WgQuickConfig?
-    
-    //MARK: VPN protocol
-    var tunnelManager: NETunnelProviderManager?
-    
     
     init(wireGuard: WireGuard) {
         self.wireGuard = wireGuard
@@ -26,5 +21,15 @@ class VPNManager: ObservableObject {
     // MARK: VPN
     public func prepare() {
 
+    }
+    
+    func getTransferredByteCount(completion: @escaping (Int, Int) -> Void) {
+        self.vpn.handleAppMessage(code: TunnelMessageCode.getTransferredByteCount) { responseData in
+            guard let responseData = responseData else {
+                return
+            }
+            let byteCount = TransferredByteCount(from: responseData)
+            completion(Int(byteCount.inbound), Int(byteCount.outbound))
+        }
     }
 }

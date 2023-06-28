@@ -11,15 +11,13 @@ struct ContentView: View {
     @StateObject var viewModel: ContentViewModel = ContentViewModel()
     
     private var inbound: String {
-        return
-            convertBytes(bytes: Double(viewModel.inbound)) + " " +
-            getUnit(bytes: viewModel.inbound)
+        return convertBytes(bytes: Double(viewModel.inbound)) + " " +
+                getUnit(bytes: viewModel.inbound)
     }
     
     private var outbound: String {
-        return
-            convertBytes(bytes: Double(viewModel.outbound)) + " " +
-            getUnit(bytes: viewModel.outbound)
+        return convertBytes(bytes: Double(viewModel.outbound)) + " " +
+                getUnit(bytes: viewModel.outbound)
     }
     
     var body: some View {
