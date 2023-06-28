@@ -98,3 +98,46 @@ extension VPN {
         }
     }
 }
+
+extension VPN {
+    /// start VPN
+    public func turnOnTunnel() -> Bool {
+        // 터널 시작 시도
+        guard let tunnelManager = self.tunnelManager else {
+            return false
+        }
+        do {
+            SwiftyBeaver.info("Starting the tunnel")
+            guard let session = tunnelManager.connection as? NETunnelProviderSession else {
+                fatalError("tunnelManager.connection is invalid")
+            }
+            try session.startTunnel()  // MARK: Start Tunneling
+            return true
+        } catch {
+            SwiftyBeaver.error("Error (startTunnel): \(error)")
+            return false
+        }
+    }
+    
+    /// stop VPN
+    public func turnOffTunnel() -> Bool {
+        // 터널 중지
+        guard let tunnelManager = self.tunnelManager else {
+            return false
+        }
+        guard let session = tunnelManager.connection as? NETunnelProviderSession else {
+            SwiftyBeaver.error("tunnelManager.connection is invalid")
+            return false
+        }
+        switch session.status {
+        case .connected, .connecting, .reasserting:
+            SwiftyBeaver.info("Stopping the tunnel")
+            session.stopTunnel()
+            return true
+        default:
+            break
+        }
+        
+        return false
+    }
+}
