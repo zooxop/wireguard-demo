@@ -23,6 +23,7 @@ class ContentViewModel: ObservableObject {
     
     // MARK: Private var
     private var runtimeUpdater: RuntimeUpdaterProtocol?
+    private var vpnStatus: VPNStatus = .disconnected
     
     // MARK: Public var
     public var wireGuard: WireGuard
@@ -43,6 +44,13 @@ class ContentViewModel: ObservableObject {
         let console = ConsoleDestination()
         SwiftyBeaver.addDestination(console)
         #endif
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(VPNStatusDidChange(notification:)),
+            name: .NEVPNStatusDidChange,
+            object: nil
+        )
     }
     
     deinit {
@@ -82,6 +90,19 @@ class ContentViewModel: ObservableObject {
         vpnManager.vpn.prepare()
     }
     
+    @objc private func VPNStatusDidChange(notification: Notification) {
+        guard let connection = notification.object as? NETunnelProviderSession else {
+            return
+        }
+        guard let _ = connection.manager.localizedDescription else {
+            return
+        }
+
+        self.vpnStatus = connection.status.wrappedStatus
+        print(self.vpnStatus)
+    }
+    
+    // MARK: Priviate func
     private func turnOnTunnel(completionHandler: @escaping (Bool) -> Void) {
         let result = vpnManager.vpn.turnOnTunnel()
         SwiftyBeaver.info("turn on result : \(result.description)")

@@ -52,6 +52,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
         SwiftyBeaver.verbose("TunnelProvider init() - PID : \(getpid())")
         self.persistentTimer?.startUpdating()
+        
+        // set Notification
+//        self.addNotification()
     }
     
     deinit {

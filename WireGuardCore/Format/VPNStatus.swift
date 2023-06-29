@@ -24,3 +24,24 @@ public enum VPNStatus: String {
     /// VPN is completing a disconnection.
     case disconnecting
 }
+
+public extension NEVPNStatus {
+    var wrappedStatus: VPNStatus {
+        switch self {
+        case .connected:
+            return .connected
+            
+        case .connecting, .reasserting:
+            return .connecting
+            
+        case .disconnecting:
+            return .disconnecting
+            
+        case .disconnected, .invalid:
+            return .disconnected
+            
+        @unknown default:
+            return .disconnected
+        }
+    }
+}

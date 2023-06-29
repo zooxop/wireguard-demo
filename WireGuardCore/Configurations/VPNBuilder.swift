@@ -25,7 +25,7 @@ public class VPNBuilder: VPN {
         self.interface = interface
         self.peer = peer
         
-        self.addNotification()
+//        self.addNotification()
     }
     
     init(wireGuard: WireGuard) {
@@ -35,49 +35,49 @@ public class VPNBuilder: VPN {
         self.interface = wireGuard.interface
         self.peer = wireGuard.peer
         
-        self.addNotification()
+//        self.addNotification()
     }
     
-    private func addNotification() {
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(vpnDidUpdate(_:)), name: .NEVPNStatusDidChange, object: nil)
-    }
-    
-    @objc func vpnDidUpdate(_ notification: Notification) {
-        guard let connection = notification.object as? NETunnelProviderSession else {
-            return
-        }
-        notifyStatus(connection)
-    }
-    
-    private func notifyStatus(_ connection: NETunnelProviderSession) {
-        guard let _ = connection.manager.localizedDescription else {
-            return
-        }
-
-        var notification = Notification(name: VPNNotification.didChangeStatus)
-        notification.vpnStatus = connection.status.wrappedStatus
-        NotificationCenter.default.post(notification)
-    }
+//    private func addNotification() {
+//        let nc = NotificationCenter.default
+//        nc.addObserver(self, selector: #selector(vpnDidUpdate(_:)), name: .NEVPNStatusDidChange, object: nil)
+//    }
+//
+//    @objc func vpnDidUpdate(_ notification: Notification) {
+//        guard let connection = notification.object as? NETunnelProviderSession else {
+//            return
+//        }
+//        notifyStatus(connection)
+//    }
+//
+//    private func notifyStatus(_ connection: NETunnelProviderSession) {
+//        guard let _ = connection.manager.localizedDescription else {
+//            return
+//        }
+//
+//        var notification = Notification(name: VPNNotification.didChangeStatus)
+//        notification.vpnStatus = connection.status.wrappedStatus
+//        NotificationCenter.default.post(notification)
+//    }
 }
 
-private extension NEVPNStatus {
-    var wrappedStatus: VPNStatus {
-        switch self {
-        case .connected:
-            return .connected
-            
-        case .connecting, .reasserting:
-            return .connecting
-            
-        case .disconnecting:
-            return .disconnecting
-            
-        case .disconnected, .invalid:
-            return .disconnected
-            
-        @unknown default:
-            return .disconnected
-        }
-    }
-}
+//private extension NEVPNStatus {
+//    var wrappedStatus: VPNStatus {
+//        switch self {
+//        case .connected:
+//            return .connected
+//
+//        case .connecting, .reasserting:
+//            return .connecting
+//
+//        case .disconnecting:
+//            return .disconnecting
+//
+//        case .disconnected, .invalid:
+//            return .disconnected
+//
+//        @unknown default:
+//            return .disconnected
+//        }
+//    }
+//}
