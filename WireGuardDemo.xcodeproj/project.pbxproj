@@ -43,7 +43,6 @@
 		DBC3E3392A4ABDA900B1F06E /* WireGuardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3382A4ABDA900B1F06E /* WireGuardConfig.swift */; };
 		DBC3E33A2A4ABDA900B1F06E /* WireGuardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3382A4ABDA900B1F06E /* WireGuardConfig.swift */; };
 		DBC3E33C2A4ACD1A00B1F06E /* WireGuardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E33B2A4ACD1A00B1F06E /* WireGuardBuilder.swift */; };
-		DBC3E33D2A4ACD1A00B1F06E /* WireGuardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E33B2A4ACD1A00B1F06E /* WireGuardBuilder.swift */; };
 		DBC3E33F2A4BBE1700B1F06E /* VPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E33E2A4BBE1700B1F06E /* VPN.swift */; };
 		DBC3E3402A4BBE1700B1F06E /* VPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E33E2A4BBE1700B1F06E /* VPN.swift */; };
 		DBC3E3422A4BBF0F00B1F06E /* VPNBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3412A4BBF0F00B1F06E /* VPNBuilder.swift */; };
@@ -57,6 +56,7 @@
 		DBC3E34F2A4C0AF000B1F06E /* VPNStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E34D2A4C0AF000B1F06E /* VPNStatus.swift */; };
 		DBC3E3512A4C1BE800B1F06E /* VPNNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3502A4C1BE800B1F06E /* VPNNotification.swift */; };
 		DBC3E3522A4C1BE800B1F06E /* VPNNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E3502A4C1BE800B1F06E /* VPNNotification.swift */; };
+		DBC3E3542A4D087B00B1F06E /* WireGuardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3E33B2A4ACD1A00B1F06E /* WireGuardBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -212,6 +212,7 @@
 		DBAFB89E2A09D135007A5C7D /* WGExtension */ = {
 			isa = PBXGroup;
 			children = (
+				DBC3E3532A4D084C00B1F06E /* WireGuard */,
 				DBAFB89F2A09D135007A5C7D /* PacketTunnelProvider.swift */,
 				DBAFB8A12A09D135007A5C7D /* Info.plist */,
 				DBAFB8A22A09D135007A5C7D /* WGExtension.entitlements */,
@@ -336,6 +337,13 @@
 				DB15547E2A0CB14200BF561E /* TunnelConfiguration+UapiConfig.swift */,
 			);
 			path = "WireGuardKit+";
+			sourceTree = "<group>";
+		};
+		DBC3E3532A4D084C00B1F06E /* WireGuard */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WireGuard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -505,7 +513,6 @@
 				DBC3E3372A4AACA700B1F06E /* UserDefaultsKey.swift in Sources */,
 				DB1554432A0C630100BF561E /* String+.swift in Sources */,
 				DBC3E3432A4BBF0F00B1F06E /* VPNBuilder.swift in Sources */,
-				DBC3E33D2A4ACD1A00B1F06E /* WireGuardBuilder.swift in Sources */,
 				DBC3E32E2A4A574E00B1F06E /* WireGuard.swift in Sources */,
 				DBC3E32B2A4A564100B1F06E /* Peer.swift in Sources */,
 				DB1554472A0C633D00BF561E /* TunnelConfiguration.swift in Sources */,
@@ -521,6 +528,7 @@
 				DB15547F2A0CB14200BF561E /* TunnelConfiguration+UapiConfig.swift in Sources */,
 				DBAFB8A02A09D135007A5C7D /* PacketTunnelProvider.swift in Sources */,
 				DBC3E34C2A4C0ADF00B1F06E /* Notification+.swift in Sources */,
+				DBC3E3542A4D087B00B1F06E /* WireGuardBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

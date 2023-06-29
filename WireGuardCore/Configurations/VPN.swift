@@ -20,7 +20,7 @@ public protocol VPN: AnyObject {
 }
 
 extension VPN {
-    /// install VPN Interface on [환경설정>네트워크]
+    /// install VPN Interface at [환경설정>네트워크]
     public func install(completion: @escaping (Bool) -> Void) {
         guard let interface = interface,
               let peer = peer

@@ -18,10 +18,12 @@ enum PacketTunnelProviderError: String, Error {
 // TODO: VPN Status Notification
 // TODO: Process를 죽이지 않고 [연결 해제 -> 재연결] 프로세스 구현
 class PacketTunnelProvider: NEPacketTunnelProvider {
-    private var configuration: TunnelConfiguration?
-    private var byteCount: TransferredByteCount?
+    // MARK: Private let
+    private let appGroup = "AWR77X8V5R.group.example.chmun.WireGuardDemo"
     
     // MARK: Private var
+    private var configuration: TunnelConfiguration?
+    private var byteCount: TransferredByteCount?
     private var persistentTimer: RuntimeUpdaterProtocol?
     
     private lazy var adapter: WireGuardAdapter = {
@@ -30,8 +32,14 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }()
     
+    // MARK: Public var
+    public var wireGuard: WireGuard
+    
     override init() {
+        self.wireGuard = WireGuardBuilder(appGroup: appGroup)
+        
         super.init()
+        
         // SwiftyBeaver
         let platform = SBPlatformDestination(appID: "Ybnqk9",
                                              appSecret: "0uwcgsvlHm7t3xR3owHw7AWKlr9zRjln",
@@ -40,10 +48,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         SwiftyBeaver.addDestination(platform)
         
         self.persistentTimer = RuntimeUpdater(timeInterval: 5) { [self] in
-            SwiftyBeaver.verbose("I'm alive haha, PID is : \(getpid())")
             self.wake()
         }
-        
+        SwiftyBeaver.verbose("TunnelProvider init() - PID : \(getpid())")
         self.persistentTimer?.startUpdating()
     }
     

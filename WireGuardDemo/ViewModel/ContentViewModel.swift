@@ -17,7 +17,7 @@ class ContentViewModel: ObservableObject {
     @Published var outbound: Int = 0
     
     // MARK: private let
-    private let appGroup = "AWX77X8V5R.group.example.chmun.WireGuardDemo"
+    private let appGroup = "AWR77X8V5R.group.example.chmun.WireGuardDemo"
     private let tunnelIdentifier = "example.chmun.WireGuardDemo.WGExtension"
     private let tunnelTitle = "WireGuard Demo App"
     
