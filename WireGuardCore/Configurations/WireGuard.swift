@@ -95,7 +95,7 @@ extension WireGuard {
     }
     
     public var peer: Peer? {
-        if publicKey == "" || allowedIPs == "" || endPoint == "" {
+        if publicKey == "" || /* allowedIPs == "" || */ endPoint == "" {
             SwiftyBeaver.info("Peer information has something wrong.")
             return nil
         }

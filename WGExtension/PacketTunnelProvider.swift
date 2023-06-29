@@ -149,6 +149,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 completionHandler(nil)
                 return
             }
+            SwiftyBeaver.debug(settings)
             let rxBytesTotal = runtimeConfig.peers.reduce(0) { $0 + ($1.rxBytes ?? 0) }
             let txBytesTotal = runtimeConfig.peers.reduce(0) { $0 + ($1.txBytes ?? 0) }
             let transferredByteCount = TransferredByteCount(inbound: rxBytesTotal, outbound: txBytesTotal)
