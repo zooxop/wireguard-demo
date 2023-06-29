@@ -120,4 +120,10 @@ class ContentViewModel: ObservableObject {
             self.outbound = outbound
         }
     }
+    
+    public func getLog() {
+        vpnManager.getLog {
+            print("getLog 호출됨.")
+        }
+    }
 }

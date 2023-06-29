@@ -30,4 +30,13 @@ class VPNManager: ObservableObject {
             completion(Int(byteCount.inbound), Int(byteCount.outbound))
         }
     }
+    
+    func getLog(completion: @escaping () -> Void) {
+        // TODO: 수정 해야함.
+        self.vpn.handleAppMessage(code: TunnelMessageCode.getLog) { responseData in
+            guard let _ = responseData else {
+                return
+            }
+        }
+    }
 }

@@ -52,9 +52,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
         SwiftyBeaver.verbose("TunnelProvider init() - PID : \(getpid())")
         self.persistentTimer?.startUpdating()
-        
-        // set Notification
-//        self.addNotification()
     }
     
     deinit {
@@ -122,6 +119,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 completionHandler?(transferredByteCount?.data)
                 self.byteCount = transferredByteCount
             }
+        case .getLog:
+            // TODO: 안했음 아직
+            SwiftyBeaver.debug("getLog 호출됨.")
+            break
         case .startProcess:
             SwiftyBeaver.debug("Just started to process now! And My PID is : \(getpid())")
             completionHandler?(nil)
@@ -156,3 +157,14 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
 }
+
+
+/*  AllowedIPs 연결 해제 하지 않고도 바꿀 수 있는 방법..
+ guard let tunnelConfiguration = try? TunnelConfiguration(fromWgQuickConfig: self.wgQuickConfig22!) else {
+     return
+ }
+
+ self.adapter.update(tunnelConfiguration: tunnelConfiguration) { error in
+     SwiftyBeaver.error(error?.localizedDescription ?? "")
+ }
+ */

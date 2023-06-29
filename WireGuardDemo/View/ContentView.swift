@@ -74,6 +74,9 @@ struct ContentView: View {
                     Button("Start process") {
                         viewModel.startExtensionProcess()
                     }
+                    Button("call getLog") {
+                        viewModel.getLog()
+                    }
                 }
                 
                 Spacer()
