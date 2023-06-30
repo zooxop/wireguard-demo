@@ -114,15 +114,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             return
         }
         switch code {
-        case .getTransferredByteCount:
-            self.getTransferredByteCount { transferredByteCount in
-                completionHandler?(transferredByteCount?.data)
-                self.byteCount = transferredByteCount
+        case .getRuntimeLogs:
+            self.getRuntimeLog { runtimeLog in
+                completionHandler?(runtimeLog)  // 메인 앱으로 raw-string as runtimeLog 전달
             }
-        case .getLog:
-            // TODO: 안했음 아직
-            SwiftyBeaver.debug("getLog 호출됨.")
-            break
         case .startProcess:
             SwiftyBeaver.debug("Just started to process now! And My PID is : \(getpid())")
             completionHandler?(nil)
@@ -142,18 +137,13 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         SwiftyBeaver.info("Here is wake(), PID is : \(getpid())")
     }
     
-    func getTransferredByteCount(completionHandler: @escaping (TransferredByteCount?) -> Void) {
+    private func getRuntimeLog(completionHandler: @escaping (Data?) -> Void) {
         adapter.getRuntimeConfiguration { settings in
-            guard let settings = settings,
-                  let runtimeConfig = try? TunnelConfiguration(fromUapiConfig: settings, basedOn: self.configuration) else {
+            guard let settings = settings else {
                 completionHandler(nil)
                 return
             }
-            SwiftyBeaver.debug(settings)
-            let rxBytesTotal = runtimeConfig.peers.reduce(0) { $0 + ($1.rxBytes ?? 0) }
-            let txBytesTotal = runtimeConfig.peers.reduce(0) { $0 + ($1.txBytes ?? 0) }
-            let transferredByteCount = TransferredByteCount(inbound: rxBytesTotal, outbound: txBytesTotal)
-            completionHandler(transferredByteCount)
+            completionHandler(settings.data(using: .utf8))
         }
     }
 

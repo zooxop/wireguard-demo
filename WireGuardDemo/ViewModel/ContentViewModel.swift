@@ -15,6 +15,7 @@ class ContentViewModel: ObservableObject {
     @Published var isConnected: Bool = false
     @Published var inbound: Int = 0
     @Published var outbound: Int = 0
+    @Published var tunnelHandshakeTimestampAgo: Int = 0
     
     // MARK: private let
     private let appGroup = "AWR77X8V5R.group.example.chmun.WireGuardDemo"
@@ -36,8 +37,8 @@ class ContentViewModel: ObservableObject {
                                             tunnelTitle: tunnelTitle)
         self.vpnManager = VPNManager(wireGuard: self.wireGuard)
         
-        self.runtimeUpdater = RuntimeUpdater(timeInterval: 3) { [self] in
-            self.getTransferredByteCount()
+        self.runtimeUpdater = RuntimeUpdater(timeInterval: 5) { [self] in
+            self.updateRuntimeLog()
         }
         
         #if DEBUG
@@ -78,16 +79,30 @@ class ContentViewModel: ObservableObject {
         self.runtimeUpdater?.stopUpdating()
         self.inbound = 0
         self.outbound = 0
+        self.tunnelHandshakeTimestampAgo = 0
     }
     
+    /// install VPN Interface at [Settings > VPN]
     func installVpnInterface() {
         vpnManager.vpn.install { result in
             print("install : \(result.description)")
         }
     }
     
+    /// launch NetworkExtension process
     func startExtensionProcess() {
         vpnManager.vpn.prepare()
+    }
+    
+    /// update runtime informations from WireGuardConfiguration
+    func updateRuntimeLog() {
+        vpnManager.getRuntimeLog { runtimeLog in
+            guard let runtimeLog = runtimeLog else {
+                return
+            }
+            self.setTransferredByteCount(inbound: runtimeLog.rxBytes, outbound: runtimeLog.txBytes)
+            self.calculateLastHandshakeTime(unixTime: runtimeLog.lastHandshakeTimeSec)
+        }
     }
     
     @objc private func VPNStatusDidChange(notification: Notification) {
@@ -114,16 +129,16 @@ class ContentViewModel: ObservableObject {
         SwiftyBeaver.info("turn off result : \(result.description)")
     }
     
-    public func getTransferredByteCount() {
-        vpnManager.getTransferredByteCount { inbound, outbound in
-            self.inbound = inbound
-            self.outbound = outbound
-        }
+    private func setTransferredByteCount(inbound: Int, outbound: Int) {
+        self.inbound = inbound
+        self.outbound = outbound
     }
     
-    public func getLog() {
-        vpnManager.getLog {
-            print("getLog 호출됨.")
-        }
+    /// 현재시간 - lastHandshakeTime 을 계산.
+    private func calculateLastHandshakeTime(unixTime: Int) {
+        let currentDate = Date()
+        let unixDate = Date(timeIntervalSince1970: Double(unixTime))
+        
+        self.tunnelHandshakeTimestampAgo = Int(currentDate.timeIntervalSince(unixDate))
     }
 }

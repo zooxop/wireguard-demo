@@ -14,6 +14,9 @@ import SwiftyBeaver
 class VPNManager: ObservableObject {
     var wireGuard: WireGuard
     var vpn: VPN
+    var runtimeLog: RuntimeLog?
+    
+    private let runtimeLogBuilder: RuntimeLogBuilder = RuntimeLogBuilder()
     
     init(wireGuard: WireGuard) {
         self.wireGuard = wireGuard
@@ -21,22 +24,13 @@ class VPNManager: ObservableObject {
     }
     
     // MARK: VPN
-    func getTransferredByteCount(completion: @escaping (Int, Int) -> Void) {
-        self.vpn.handleAppMessage(code: TunnelMessageCode.getTransferredByteCount) { responseData in
+    func getRuntimeLog(completion: @escaping (RuntimeLog?) -> Void) {
+        self.vpn.handleAppMessage(code: TunnelMessageCode.getRuntimeLogs) { responseData in
             guard let responseData = responseData else {
+                completion(nil)
                 return
             }
-            let byteCount = TransferredByteCount(from: responseData)
-            completion(Int(byteCount.inbound), Int(byteCount.outbound))
-        }
-    }
-    
-    func getLog(completion: @escaping () -> Void) {
-        // TODO: 수정 해야함.
-        self.vpn.handleAppMessage(code: TunnelMessageCode.getLog) { responseData in
-            guard let _ = responseData else {
-                return
-            }
+            completion(self.runtimeLogBuilder.build(responseData))
         }
     }
 }

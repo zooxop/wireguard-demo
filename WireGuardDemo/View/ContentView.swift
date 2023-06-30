@@ -20,6 +20,10 @@ struct ContentView: View {
                 getUnit(bytes: viewModel.outbound)
     }
     
+    private var lastHandshakeTimestampAgo: String {
+        return viewModel.tunnelHandshakeTimestampAgo.description
+    }
+    
     var body: some View {
         ZStack {
             Color.white.ignoresSafeArea()
@@ -38,12 +42,6 @@ struct ContentView: View {
                 }
                 
                 HStack {
-                    Button {
-                        viewModel.getTransferredByteCount()
-                    } label: {
-                        Text("Refresh Bytes")
-                    }
-                    
                     Spacer()
                     
                     Button {
@@ -63,6 +61,7 @@ struct ContentView: View {
                         HStack {
                             Spacer()
                             Text("Send : \(self.outbound)\nReceive : \(self.inbound)")
+                            Text("tunnelHandshakeTimestampAgo : \(self.lastHandshakeTimestampAgo)")
                         }
                     }
                 }
@@ -73,26 +72,6 @@ struct ContentView: View {
                     }
                     Button("Start process") {
                         viewModel.startExtensionProcess()
-                    }
-                    Button("call getLog") {
-                        viewModel.getLog()
-                    }
-                    Button("last handshake time") {
-                        let lastHandshakeTimeSecString = "1688026098"
-                        
-                        var lastHandshakeTimeSince1970: TimeInterval = 0
-                        guard let lastHandshakeTimeSec = UInt64(lastHandshakeTimeSecString) else {
-                            print("error")
-                            return
-                        }
-                        if lastHandshakeTimeSec != 0 {
-                            lastHandshakeTimeSince1970 += Double(lastHandshakeTimeSec)
-                            
-                            print("Date : \(Date(timeIntervalSince1970: lastHandshakeTimeSince1970))")
-                            // TODO: LastHandshakeTime 으로 Peer가 끊겼는지 확인하기.
-                            // TODO: WiFi 변경, Cellular 의 공인아이피 변경을 자체적으로 감지해서 이벤트.
-                        }
-                        
                     }
                 }
                 
