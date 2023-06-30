@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Reachability
 
 struct ContentView: View {
     @StateObject var viewModel: ContentViewModel = ContentViewModel()
@@ -80,7 +81,8 @@ struct ContentView: View {
                         viewModel.startExtensionProcess()
                     }
                     Button("check Network is enable") {
-                        print(Reachability().isConnectedToNetwork().description)
+//                        print(Reachability().isConnectedToNetwork().description)
+//                        Reachability.
                     }
                 }
                 
