@@ -5,131 +5,140 @@
 //  Created by 문철현 on 2023/05/09.
 //
 
-import SwiftUI
-import TunnelKitManager
-import TunnelKitWireGuardCore
-import TunnelKitWireGuardManager
+import Foundation
+import NetworkExtension
 import SwiftyBeaver
 
 class ContentViewModel: ObservableObject {
-    // MARK: - Properties
-    @Published var interface: Interface
-    @Published var peer: Peer
+    
+    // MARK: Published
     @Published var isConnected: Bool = false
+    @Published var inbound: Int = 0
+    @Published var outbound: Int = 0
+    @Published var tunnelHandshakeTimestampAgo: Int = 0
     
-    private let appGroup = "AWX77X8V5R.group.example.chmun.WireGuardDemo"
+    // MARK: private let
+    private let appGroup = "AWR77X8V5R.group.example.chmun.WireGuardDemo"
     private let tunnelIdentifier = "example.chmun.WireGuardDemo.WGExtension"
+    private let tunnelTitle = "WireGuard Demo App"
     
-    private let vpn = NetworkExtensionVPN()
-    private(set) var vpnStatus: VPNStatus = .disconnected
-    private var wireguardCfg: WireGuard.ProviderConfiguration?
+    // MARK: Private var
+    private var runtimeUpdater: RuntimeUpdaterProtocol?
+    private var vpnStatus: VPNStatus = .disconnected
+    
+    // MARK: Public var
+    public var wireGuard: WireGuard
+    public var vpnManager: VPNManager
     
     // MARK: - Initializer
     init() {
-        // SwiftyBeaver 등록
+        self.wireGuard = WireGuardBuilder(appGroup: appGroup,
+                                            tunnelIdentifier: tunnelIdentifier,
+                                            tunnelTitle: tunnelTitle)
+        self.vpnManager = VPNManager(wireGuard: self.wireGuard)
+        
+        self.runtimeUpdater = RuntimeUpdater(timeInterval: 5) { [self] in
+            self.updateRuntimeLog()
+        }
+        
+        #if DEBUG
         let console = ConsoleDestination()
         SwiftyBeaver.addDestination(console)
+        #endif
         
-        // 기본 Config 세팅
-        let privateKey = UserDefaults.standard.string(forKey: UserDefaultsKey.interPrivateKey) ?? ""
-        let address = UserDefaults.standard.string(forKey: UserDefaultsKey.interAddress) ?? ""
-        let dns = UserDefaults.standard.string(forKey: UserDefaultsKey.interDNS) ?? "8.8.8.8"
-
-        let publicKey = UserDefaults.standard.string(forKey: UserDefaultsKey.peerPublicKey) ?? ""
-        let allowedIPs = UserDefaults.standard.string(forKey: UserDefaultsKey.peerAllowedIPs) ?? "0.0.0.0/0"
-        let endpoint = UserDefaults.standard.string(forKey: UserDefaultsKey.peerEndpoint) ?? ""
-        
-        interface = Interface(privateKey: privateKey,
-                              address: address,
-                              dns: dns)
-        peer = Peer(publicKey: publicKey,
-                    allowedIPs: allowedIPs,
-                    endPoint: endpoint)
-        
-        // VPN Observer 등록
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(VPNStatusDidChange(notification:)),
-            name: VPNNotification.didChangeStatus,
+            name: .NEVPNStatusDidChange,
             object: nil
         )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(VPNDidFail(notification:)),
-            name: VPNNotification.didFail,
-            object: nil
-        )
-        
-        Task {
-            await vpn.prepare()
-        }
     }
     
-    func saveConfig() {
-        UserDefaults.standard.set(interface.privateKey, forKey: UserDefaultsKey.interPrivateKey)
-        UserDefaults.standard.set(interface.address, forKey: UserDefaultsKey.interAddress)
-        UserDefaults.standard.set(interface.dns, forKey: UserDefaultsKey.interDNS)
-        UserDefaults.standard.set(peer.publicKey, forKey: UserDefaultsKey.peerPublicKey)
-        UserDefaults.standard.set(peer.allowedIPs, forKey: UserDefaultsKey.peerAllowedIPs)
-        UserDefaults.standard.set(peer.endPoint, forKey: UserDefaultsKey.peerEndpoint)
+    deinit {
+        self.runtimeUpdater = nil
+        self.stopVpn()
     }
-    
-    // MARK: - Notification
-    @objc private func VPNStatusDidChange(notification: Notification) {
-        vpnStatus = notification.vpnStatus
-        SwiftyBeaver.info("VPNStatusDidChange: \(vpnStatus)")
-        
-        switch self.vpnStatus {
-        case .connected:
-            isConnected = true
-            break
-        case .disconnected:
-            isConnected = false
-        default:
-            break
-        }
-    }
-    
-    @objc private func VPNDidFail(notification: Notification) {
-        SwiftyBeaver.info("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
-    }
-    
     
     // MARK: - VPN
     
-    /// WireGuard Configuration 반환
-    private func buildWireGuardConf() -> WireGuard.ProviderConfiguration {
-        var allowedIPs: [String] = []
-        allowedIPs.append(peer.allowedIPs)  // TODO: string 값 쉼표로 구분해서 배열로 집어넣어줘야 함.
-        
-        var builder = try! WireGuard.ConfigurationBuilder(interface.privateKey)
-        builder.addresses = [interface.address]
-        builder.dnsServers = [interface.dns]
-        try! builder.addPeer(peer.publicKey, endpoint: peer.endPoint, allowedIPs: allowedIPs)
-        
-        return WireGuard.ProviderConfiguration("WireGuard Demo App", appGroup: appGroup, configuration: builder.build())
-    }
-    
     /// start Tunneling
-    public func startVpn() {
-        wireguardCfg = buildWireGuardConf()
-        
-        Task {
-            try await vpn.reconnect(
-                tunnelIdentifier,
-                configuration: wireguardCfg!,
-                extra: nil,
-                after: .never
-            )
+    func startVpn() {
+        SwiftyBeaver.info("Start VPN")
+        self.turnOnTunnel { isSuccess in
+            if isSuccess {
+                self.isConnected = isSuccess
+                self.runtimeUpdater?.startUpdating()
+            }
         }
     }
     
     /// stop Tunneling
-    public func stopVpn() {
-        Task {
-            await vpn.disconnect()
-        }
-        isConnected = false
+    func stopVpn() {
+        self.isConnected = false
+        self.turnOffTunnel()
+        self.runtimeUpdater?.stopUpdating()
+        self.inbound = 0
+        self.outbound = 0
+        self.tunnelHandshakeTimestampAgo = 0
     }
     
+    /// install VPN Interface at [Settings > VPN]
+    func installVpnInterface() {
+        vpnManager.vpn.install { result in
+            print("install : \(result.description)")
+        }
+    }
+    
+    /// launch NetworkExtension process
+    func startExtensionProcess() {
+        vpnManager.vpn.prepare()
+    }
+    
+    /// update runtime informations from WireGuardConfiguration
+    func updateRuntimeLog() {
+        vpnManager.getRuntimeLog { runtimeLog in
+            guard let runtimeLog = runtimeLog else {
+                return
+            }
+            self.setTransferredByteCount(inbound: runtimeLog.rxBytes, outbound: runtimeLog.txBytes)
+            self.calculateLastHandshakeTime(unixTime: runtimeLog.lastHandshakeTimeSec)
+        }
+    }
+    
+    @objc private func VPNStatusDidChange(notification: Notification) {
+        guard let connection = notification.object as? NETunnelProviderSession else {
+            return
+        }
+        guard let _ = connection.manager.localizedDescription else {
+            return
+        }
+
+        self.vpnStatus = connection.status.wrappedStatus
+        print(self.vpnStatus)
+    }
+    
+    // MARK: Priviate func
+    private func turnOnTunnel(completionHandler: @escaping (Bool) -> Void) {
+        let result = vpnManager.vpn.turnOnTunnel()
+        SwiftyBeaver.info("turn on result : \(result.description)")
+        completionHandler(result)
+    }
+    
+    private func turnOffTunnel() {
+        let result = vpnManager.vpn.turnOffTunnel()
+        SwiftyBeaver.info("turn off result : \(result.description)")
+    }
+    
+    private func setTransferredByteCount(inbound: Int, outbound: Int) {
+        self.inbound = inbound
+        self.outbound = outbound
+    }
+    
+    /// 현재시간 - lastHandshakeTime 을 계산.
+    private func calculateLastHandshakeTime(unixTime: Int) {
+        let currentDate = Date()
+        let unixDate = Date(timeIntervalSince1970: Double(unixTime))
+        
+        self.tunnelHandshakeTimestampAgo = Int(currentDate.timeIntervalSince(unixDate))
+    }
 }

@@ -9,7 +9,20 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel: ContentViewModel = ContentViewModel()
-    @State var showAlert: Bool = false
+    
+    private var inbound: String {
+        return convertBytes(bytes: Double(viewModel.inbound)) + " " +
+                getUnit(bytes: viewModel.inbound)
+    }
+    
+    private var outbound: String {
+        return convertBytes(bytes: Double(viewModel.outbound)) + " " +
+                getUnit(bytes: viewModel.outbound)
+    }
+    
+    private var lastHandshakeTimestampAgo: String {
+        return viewModel.tunnelHandshakeTimestampAgo.description
+    }
     
     var body: some View {
         ZStack {
@@ -17,23 +30,20 @@ struct ContentView: View {
             
             VStack {
                 propertyBox("[Interface]") {
-                    boxTextFieldItem("Private Key", text: $viewModel.interface.privateKey)
-                    boxTextFieldItem("Address", text: $viewModel.interface.address)
-                    boxTextFieldItem("DNS", text: $viewModel.interface.dns)
+                    boxTextFieldItem("Private Key", text: $viewModel.wireGuard.privateKey)
+                    boxTextFieldItem("Address", text: $viewModel.wireGuard.address)
+                    boxTextFieldItem("DNS", text: $viewModel.wireGuard.dns)
                 }
                 
                 propertyBox("[Peer]") {
-                    boxTextFieldItem("Public Key", text: $viewModel.peer.publicKey)
-                    boxTextFieldItem("AllowedIPs", text: $viewModel.peer.allowedIPs)
-                    boxTextFieldItem("Endpoint", text: $viewModel.peer.endPoint)
+                    boxTextFieldItem("Public Key", text: $viewModel.wireGuard.publicKey)
+                    boxTextFieldItem("AllowedIPs", text: $viewModel.wireGuard.allowedIPs)
+                    boxTextFieldItem("Endpoint", text: $viewModel.wireGuard.endPoint)
                 }
                 
                 HStack {
-                    Button("Save") {
-                        viewModel.saveConfig()
-                        showAlert.toggle()
-                    }
                     Spacer()
+                    
                     Button {
                         if viewModel.isConnected == false {
                             viewModel.startVpn()
@@ -46,13 +56,29 @@ struct ContentView: View {
                     }
                 }
                 
+                if viewModel.isConnected {
+                    withAnimation {
+                        HStack {
+                            Spacer()
+                            Text("Send : \(self.outbound)\nReceive : \(self.inbound)")
+                            Text("tunnelHandshakeTimestampAgo : \(self.lastHandshakeTimestampAgo)")
+                        }
+                    }
+                }
+                
+                VStack {
+                    Button("Install VPN") {
+                        viewModel.installVpnInterface()
+                    }
+                    Button("Start process") {
+                        viewModel.startExtensionProcess()
+                    }
+                }
+                
                 Spacer()
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 10)
-        }
-        .alert(isPresented: $showAlert) {
-            Alert(title: Text("Save"), message: Text("Save successful"))
         }
     }
     
@@ -94,6 +120,37 @@ struct ContentView: View {
                     
             }
             .frame(maxWidth: WindowSize.fixedSize.width - 120)
+        }
+    }
+    
+    private func convertBytes(bytes: Double) -> String {
+        let kb = 1024.0
+        let mb = kb * kb
+        let gb = mb * kb
+
+        if bytes >= gb {
+            return String(format: "%.2f", bytes/gb)
+        } else if bytes >= mb {
+            return String(format: "%.2f", bytes/mb)
+        } else if bytes >= kb {
+            return String(format: "%.2f", bytes/kb)
+        } else {
+            return "\(Int(bytes))"
+        }
+    }
+    
+    private func getUnit(bytes: Int) -> String {
+        switch bytes {
+        case 0..<1_024:
+            return "Byte"
+        case 1_024..<(1_024 * 1_024):
+            return "KiB"
+        case 1_024..<(1_024 * 1_024 * 1_024):
+            return "MiB"
+        case (1_024 * 1_024 * 1_024)...Int.max:
+            return "GiB"
+        default:
+            return "Byte"
         }
     }
 }
