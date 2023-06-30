@@ -1,8 +1,8 @@
 //
-//  Shared.swift
+//  TransferredByteCount.swift
 //  WireGuardDemo
 //
-//  Created by 문철현 on 2023/05/11.
+//  Created by 문철현 on 2023/06/30.
 //
 
 import Foundation

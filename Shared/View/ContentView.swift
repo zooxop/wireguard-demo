@@ -119,7 +119,9 @@ struct ContentView: View {
                 TextField(caption, text: text)
                     
             }
+            #if os(macOS)
             .frame(maxWidth: WindowSize.fixedSize.width - 120)
+            #endif
         }
     }
     
@@ -158,7 +160,9 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+        #if os(macOS)
             .frame(minWidth: WindowSize.fixedSize.width, minHeight: WindowSize.fixedSize.height)
             .frame(maxWidth: WindowSize.fixedSize.width, maxHeight: WindowSize.fixedSize.height)
+        #endif
     }
 }
