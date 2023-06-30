@@ -58,10 +58,16 @@ struct ContentView: View {
                 
                 if viewModel.isConnected {
                     withAnimation {
-                        HStack {
-                            Spacer()
-                            Text("Send : \(self.outbound)\nReceive : \(self.inbound)")
-                            Text("tunnelHandshakeTimestampAgo : \(self.lastHandshakeTimestampAgo)")
+                        VStack {
+                            HStack {
+                                Spacer()
+                                Text("Send : \(self.outbound)\nReceive : \(self.inbound)")
+                                
+                            }
+                            HStack {
+                                Spacer()
+                                Text("tunnelHandshakeTimestampAgo : \(self.lastHandshakeTimestampAgo)")
+                            }
                         }
                     }
                 }
@@ -72,6 +78,9 @@ struct ContentView: View {
                     }
                     Button("Start process") {
                         viewModel.startExtensionProcess()
+                    }
+                    Button("check Network is enable") {
+                        print(Reachability().isConnectedToNetwork().description)
                     }
                 }
                 
