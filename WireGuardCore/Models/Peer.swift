@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Peer {
+public struct Peer {
     var publicKey: String
     var allowedIPs: String
     var endPoint: String

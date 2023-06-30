@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftyBeaver
 
 enum WindowSize {
     static let fixedSize = CGSize(width: 400, height: 530)
@@ -13,6 +14,14 @@ enum WindowSize {
 
 @main
 struct WireGuardDemoApp: App {
+    
+    init() {
+//        #if DEBUG
+//        let console = ConsoleDestination()
+//        SwiftyBeaver.addDestination(console)
+//        #endif
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
