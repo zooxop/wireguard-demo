@@ -9,8 +9,6 @@ import Foundation
 import NetworkExtension
 import SwiftyBeaver
 
-// TODO: VPNStatus 옵저빙
-// TODO: 연결 상태에서, 서버에서 Peer 정보 삭제시키는 경우를 감지하는 기능
 class VPNManager: ObservableObject {
     var wireGuard: WireGuard
     var vpn: VPN
