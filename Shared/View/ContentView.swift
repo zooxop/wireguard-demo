@@ -41,6 +41,8 @@ struct ContentView: View {
                     boxTextFieldItem("Endpoint", text: $viewModel.wireGuard.endPoint)
                 }
                 
+                Text("Public IP : \(viewModel.currentIP)")
+                
                 HStack {
                     Spacer()
                     
@@ -81,8 +83,6 @@ struct ContentView: View {
                     }
                     Button("IP Address") {
                         viewModel.getIPAddress()
-//                        print(Reachability().isConnectedToNetwork().description)
-//                        Reachability.
                     }
                 }
                 

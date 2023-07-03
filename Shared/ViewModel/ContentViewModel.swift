@@ -8,6 +8,7 @@
 import Foundation
 import NetworkExtension
 import SwiftyBeaver
+import Network
 
 class ContentViewModel: ObservableObject {
     
@@ -16,6 +17,16 @@ class ContentViewModel: ObservableObject {
     @Published var inbound: Int = 0
     @Published var outbound: Int = 0
     @Published var tunnelHandshakeTimestampAgo: Int = 0
+    @Published var currentIP: String = "" {
+        didSet(oldValue) {
+            if self.currentIP != oldValue {
+                print("current : ", self.currentIP, "old : ", oldValue)
+                print("재연결 Notification post 하면 됨. (단, VPN 커넥션 중일 때만.)")
+            }
+        }
+    }
+    
+    let networkMonitor = NWPathMonitor()
     
     // MARK: private let
     private let appGroup = "AWR77X8V5R.group.example.chmun.WireGuardDemo"
@@ -52,6 +63,8 @@ class ContentViewModel: ObservableObject {
             name: .NEVPNStatusDidChange,
             object: nil
         )
+        self.getIPAddress()
+        self.setNetworkMonitor()
     }
     
     deinit {
@@ -59,12 +72,26 @@ class ContentViewModel: ObservableObject {
         self.stopVpn()
     }
     
+    func setNetworkMonitor() {
+        self.networkMonitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                print("connected : ", path.status)
+                self.getIPAddress()
+            } else {
+                print("끊김")
+            }
+        }
+        self.networkMonitor.start(queue: DispatchQueue.global())
+    }
+    
     func getIPAddress() {
-        getPublicIP(url: PublicIPAPIURLs.ipv4.amazonaws.rawValue) { (string, error) in
+        getPublicIP(url: PublicIPAPIURLs.ipv4.amazonaws.rawValue) { (ip, error) in
             if let error = error {
                 print(error.localizedDescription)
-            } else if let string = string {
-                print(string) // Your IP address
+            } else if let ip = ip {
+                DispatchQueue.main.async {
+                    self.currentIP = ip
+                }
             }
         }
     }
