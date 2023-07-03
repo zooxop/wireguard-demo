@@ -59,6 +59,16 @@ class ContentViewModel: ObservableObject {
         self.stopVpn()
     }
     
+    func getIPAddress() {
+        getPublicIP(url: PublicIPAPIURLs.ipv4.amazonaws.rawValue) { (string, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else if let string = string {
+                print(string) // Your IP address
+            }
+        }
+    }
+    
     // MARK: - VPN
     
     /// start Tunneling

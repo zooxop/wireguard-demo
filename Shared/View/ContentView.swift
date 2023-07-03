@@ -74,13 +74,14 @@ struct ContentView: View {
                 }
                 
                 VStack {
-                    Button("Install VPN") {
+                    Button("Install VPN") { 
                         viewModel.installVpnInterface()
                     }
                     Button("Start process") {
                         viewModel.startExtensionProcess()
                     }
-                    Button("check Network is enable") {
+                    Button("IP Address") {
+                        viewModel.getIPAddress()
 //                        print(Reachability().isConnectedToNetwork().description)
 //                        Reachability.
                     }
