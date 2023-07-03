@@ -113,10 +113,6 @@
 		DBDC92262A4EA5E500A4A429 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAFB89F2A09D135007A5C7D /* PacketTunnelProvider.swift */; };
 		DBDC92282A4EA67800A4A429 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = DBDC92272A4EA67800A4A429 /* WireGuardKit */; };
 		DBDC922A2A4EA67800A4A429 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = DBDC92292A4EA67800A4A429 /* SwiftyBeaver */; };
-		DBDC92322A4EBFEC00A4A429 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = DBDC92312A4EBFEC00A4A429 /* Reachability */; };
-		DBDC92342A4EC06B00A4A429 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = DBDC92332A4EC06B00A4A429 /* Reachability */; };
-		DBDC92362A4EC07300A4A429 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = DBDC92352A4EC07300A4A429 /* Reachability */; };
-		DBDC92382A4EC07800A4A429 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = DBDC92372A4EC07800A4A429 /* Reachability */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -226,7 +222,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB1554412A0B87B400BF561E /* WireGuardKit in Frameworks */,
-				DBDC92322A4EBFEC00A4A429 /* Reachability in Frameworks */,
 				DB7111392A4923F80010A3BC /* SwiftyBeaver in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,7 +231,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB1554492A0C635000BF561E /* WireGuardKit in Frameworks */,
-				DBDC92362A4EC07300A4A429 /* Reachability in Frameworks */,
 				DBAFB89D2A09D135007A5C7D /* NetworkExtension.framework in Frameworks */,
 				DB71113B2A4923FE0010A3BC /* SwiftyBeaver in Frameworks */,
 			);
@@ -247,7 +241,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBDC92282A4EA67800A4A429 /* WireGuardKit in Frameworks */,
-				DBDC92342A4EC06B00A4A429 /* Reachability in Frameworks */,
 				DBDC922A2A4EA67800A4A429 /* SwiftyBeaver in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,7 +250,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBDC91F52A4EA18B00A4A429 /* WireGuardKit in Frameworks */,
-				DBDC92382A4EC07800A4A429 /* Reachability in Frameworks */,
 				DBDC91E12A4E9FF100A4A429 /* NetworkExtension.framework in Frameworks */,
 				DBDC91F72A4EA18B00A4A429 /* SwiftyBeaver in Frameworks */,
 			);
@@ -566,7 +558,6 @@
 			packageProductDependencies = (
 				DB1554402A0B87B400BF561E /* WireGuardKit */,
 				DB7111382A4923F80010A3BC /* SwiftyBeaver */,
-				DBDC92312A4EBFEC00A4A429 /* Reachability */,
 			);
 			productName = WireGuardDemo;
 			productReference = DBAFB8842A09CE62007A5C7D /* WireGuardDemo.app */;
@@ -589,7 +580,6 @@
 			packageProductDependencies = (
 				DB1554482A0C635000BF561E /* WireGuardKit */,
 				DB71113A2A4923FE0010A3BC /* SwiftyBeaver */,
-				DBDC92352A4EC07300A4A429 /* Reachability */,
 			);
 			productName = WGExtension;
 			productReference = DBAFB89A2A09D134007A5C7D /* WGExtension.appex */;
@@ -613,7 +603,6 @@
 			packageProductDependencies = (
 				DBDC92272A4EA67800A4A429 /* WireGuardKit */,
 				DBDC92292A4EA67800A4A429 /* SwiftyBeaver */,
-				DBDC92332A4EC06B00A4A429 /* Reachability */,
 			);
 			productName = WireGuardDemoiOS;
 			productReference = DBDC91CD2A4E9EE600A4A429 /* WireGuardDemo-iOS.app */;
@@ -636,7 +625,6 @@
 			packageProductDependencies = (
 				DBDC91F42A4EA18B00A4A429 /* WireGuardKit */,
 				DBDC91F62A4EA18B00A4A429 /* SwiftyBeaver */,
-				DBDC92372A4EC07800A4A429 /* Reachability */,
 			);
 			productName = WGExtensioniOS;
 			productReference = DBDC91E02A4E9FF100A4A429 /* WGExtension-iOS.appex */;
@@ -684,7 +672,6 @@
 			packageReferences = (
 				DB15543F2A0B87B400BF561E /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 				DB7111372A4923F80010A3BC /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
-				DBDC92302A4EBFEC00A4A429 /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = DBAFB8852A09CE62007A5C7D /* Products */;
 			projectDirPath = "";
@@ -1418,14 +1405,6 @@
 				version = 1.9.6;
 			};
 		};
-		DBDC92302A4EBFEC00A4A429 /* XCRemoteSwiftPackageReference "Reachability" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/tonymillion/Reachability.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1468,26 +1447,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB7111372A4923F80010A3BC /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;
 			productName = SwiftyBeaver;
-		};
-		DBDC92312A4EBFEC00A4A429 /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DBDC92302A4EBFEC00A4A429 /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
-		};
-		DBDC92332A4EC06B00A4A429 /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DBDC92302A4EBFEC00A4A429 /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
-		};
-		DBDC92352A4EC07300A4A429 /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DBDC92302A4EBFEC00A4A429 /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
-		};
-		DBDC92372A4EC07800A4A429 /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DBDC92302A4EBFEC00A4A429 /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

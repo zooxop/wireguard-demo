@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Reachability
 
 struct ContentView: View {
     @StateObject var viewModel: ContentViewModel = ContentViewModel()

@@ -1,15 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "reachability",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tonymillion/Reachability.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "8d7cc7be2f6ad0e1d4eee94653388d1fa6d453fc"
-      }
-    },
-    {
       "identity" : "swiftybeaver",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SwiftyBeaver/SwiftyBeaver.git",
