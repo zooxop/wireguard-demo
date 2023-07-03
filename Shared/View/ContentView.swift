@@ -41,6 +41,8 @@ struct ContentView: View {
                     boxTextFieldItem("Endpoint", text: $viewModel.wireGuard.endPoint)
                 }
                 
+                Text("Public IP : \(viewModel.currentIP)")
+                
                 HStack {
                     Spacer()
                     
@@ -58,20 +60,29 @@ struct ContentView: View {
                 
                 if viewModel.isConnected {
                     withAnimation {
-                        HStack {
-                            Spacer()
-                            Text("Send : \(self.outbound)\nReceive : \(self.inbound)")
-                            Text("tunnelHandshakeTimestampAgo : \(self.lastHandshakeTimestampAgo)")
+                        VStack {
+                            HStack {
+                                Spacer()
+                                Text("Send : \(self.outbound)\nReceive : \(self.inbound)")
+                                
+                            }
+                            HStack {
+                                Spacer()
+                                Text("tunnelHandshakeTimestampAgo : \(self.lastHandshakeTimestampAgo)")
+                            }
                         }
                     }
                 }
                 
                 VStack {
-                    Button("Install VPN") {
+                    Button("Install VPN") { 
                         viewModel.installVpnInterface()
                     }
                     Button("Start process") {
                         viewModel.startExtensionProcess()
+                    }
+                    Button("IP Address") {
+                        viewModel.getIPAddress()
                     }
                 }
                 

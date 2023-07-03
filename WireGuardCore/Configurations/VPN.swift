@@ -55,7 +55,7 @@ extension VPN {
             // wgQuickConfig 형식으로 config를 생성
             
             let builder = WireGuardConfigBuilder(interface: interface, peer: peer)
-            guard let wgQuickConfig = builder.build() else {
+            guard let wgQuickConfig = builder.build(keepAlive: 25) else {
                 SwiftyBeaver.warning("make wgQuickConfig is failed")
                 return
             }

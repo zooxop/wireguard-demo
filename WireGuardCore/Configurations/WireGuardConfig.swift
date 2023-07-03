@@ -20,7 +20,7 @@ class WireGuardConfigBuilder: WireGuardConfig {
         self.peer = peer
     }
     
-    func build() -> WgQuickConfig? {
+    func build(keepAlive: Int) -> WgQuickConfig? {
         return """
         [Interface]
         PrivateKey = \(interface.privateKey)
@@ -31,6 +31,7 @@ class WireGuardConfigBuilder: WireGuardConfig {
         PublicKey = \(peer.publicKey)
         AllowedIPs = \(peer.allowedIPs)
         Endpoint = \(peer.endPoint)
+        PersistentKeepalive = \(keepAlive.description)
         """
     }
 }

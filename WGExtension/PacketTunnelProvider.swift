@@ -15,8 +15,6 @@ enum PacketTunnelProviderError: String, Error {
     case cantParseWgQuickConfig
 }
 
-// TODO: VPN Status Notification
-// TODO: Process를 죽이지 않고 [연결 해제 -> 재연결] 프로세스 구현
 class PacketTunnelProvider: NEPacketTunnelProvider {
     // MARK: Private let
     private let appGroup = "AWR77X8V5R.group.example.chmun.WireGuardDemo"
