@@ -142,6 +142,51 @@ class ContentViewModel: ObservableObject {
         }
     }
     
+    func sendAPI() {
+        vpnManager.send()
+    }
+    
+    func sendAPIOnApp() {
+        let urlString = "http://20.249.63.220:8000/" // API 엔드포인트 URL을 여기에 입력하세요.
+        guard let url = URL(string: urlString) else {
+            SwiftyBeaver.error("유효하지 않은 URL입니다.")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET" // 요청 메서드를 원하는 것으로 변경하세요.
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                SwiftyBeaver.error("요청 실패: \(error)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                SwiftyBeaver.error("유효하지 않은 응답입니다.")
+                return
+            }
+            
+            if httpResponse.statusCode == 200 {
+                if let data = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: [])
+                        if let jsonResult = json as? [String: Any] {
+                            if let result = jsonResult["result"] as? String {
+                                SwiftyBeaver.info("응답 결과: \(result)")
+                            }
+                        }
+                    } catch {
+                        SwiftyBeaver.error("JSON 파싱 실패: \(error)")
+                    }
+                }
+            } else {
+                SwiftyBeaver.error("응답 상태 코드: \(httpResponse.statusCode)")
+            }
+        }
+        task.resume()
+    }
+    
     @objc private func VPNStatusDidChange(notification: Notification) {
         guard let connection = notification.object as? NETunnelProviderSession else {
             return

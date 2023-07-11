@@ -31,4 +31,12 @@ class VPNManager: ObservableObject {
             completion(self.runtimeLogBuilder.build(responseData))
         }
     }
+    
+    func send() {
+        self.vpn.handleAppMessage(code: .getLog) { responseData in
+            guard let _ = responseData else {
+                return
+            }
+        }
+    }
 }

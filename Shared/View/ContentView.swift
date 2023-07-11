@@ -84,6 +84,14 @@ struct ContentView: View {
                     Button("IP Address") {
                         viewModel.getIPAddress()
                     }
+                    HStack {
+                        Button("Send API on App") {
+                            viewModel.sendAPIOnApp()
+                        }
+                        Button("send API on Extension") {
+                            viewModel.sendAPI()
+                        }
+                    }
                 }
                 
                 Spacer()

@@ -39,11 +39,16 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         super.init()
         
         // SwiftyBeaver
-        let platform = SBPlatformDestination(appID: "Ybnqk9",
-                                             appSecret: "0uwcgsvlHm7t3xR3owHw7AWKlr9zRjln",
-                                             encryptionKey: "byqgrigef1ym3aWroozlAkkNAm1nnCwf")
+        let file = FileDestination()
 
-        SwiftyBeaver.addDestination(platform)
+        let url = try? FileManager.default.url(for: .documentDirectory,
+                            in: .userDomainMask,
+                            appropriateFor: nil,
+                            create: true)
+
+        let fileURL = url?.appendingPathComponent("LogByBeaver.log")
+        file.logFileURL = fileURL
+        SwiftyBeaver.self.addDestination(file)
         
         self.persistentTimer = RuntimeUpdater(timeInterval: 5) { [self] in
             self.wake()
@@ -53,6 +58,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
     
     deinit {
+        SwiftyBeaver.warning("Deinit 된다~~~")
         self.persistentTimer?.stopUpdating()
         self.persistentTimer = nil
     }
@@ -63,8 +69,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         log("Starting tunnel")
-        guard let protocolConfiguration = self.protocolConfiguration as? NETunnelProviderProtocol,
-              let providerConfiguration = protocolConfiguration.providerConfiguration,
+        guard let protocolConfiguration = self.protocolConfiguration as? NETunnelProviderProtocol else {
+            return
+        }
+        protocolConfiguration.serverAddress = wireGuard.endPoint
+        guard let providerConfiguration = protocolConfiguration.providerConfiguration,
               let wgQuickConfig = providerConfiguration["wgQuickConfig"] as? String else {
             log("Invalid provider configuration")
             completionHandler(PacketTunnelProviderError.invalidProtocolConfiguration)
@@ -116,6 +125,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             self.getRuntimeLog { runtimeLog in
                 completionHandler?(runtimeLog)  // 메인 앱으로 raw-string as runtimeLog 전달
             }
+        case .getLog:
+            self.sendAPI()
         case .startProcess:
             SwiftyBeaver.debug("Just started to process now! And My PID is : \(getpid())")
             completionHandler?(nil)
@@ -144,7 +155,47 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             completionHandler(settings.data(using: .utf8))
         }
     }
-
+    
+    private func sendAPI() {
+        let urlString = "http://20.249.63.220:8000/" // API 엔드포인트 URL을 여기에 입력하세요.
+        guard let url = URL(string: urlString) else {
+            SwiftyBeaver.error("유효하지 않은 URL입니다.")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET" // 요청 메서드를 원하는 것으로 변경하세요.
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                SwiftyBeaver.error("요청 실패: \(error)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                SwiftyBeaver.error("유효하지 않은 응답입니다.")
+                return
+            }
+            
+            if httpResponse.statusCode == 200 {
+                if let data = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: [])
+                        if let jsonResult = json as? [String: Any] {
+                            if let result = jsonResult["result"] as? String {
+                                SwiftyBeaver.info("응답 결과: \(result)")
+                            }
+                        }
+                    } catch {
+                        SwiftyBeaver.error("JSON 파싱 실패: \(error)")
+                    }
+                }
+            } else {
+                SwiftyBeaver.error("응답 상태 코드: \(httpResponse.statusCode)")
+            }
+        }
+        task.resume()
+    }
 }
 
 

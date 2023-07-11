@@ -50,7 +50,7 @@ extension VPN {
 
             // Server 주소 설정. (non-nil)
             // Server의 domain명 또는 IP 주소
-            protocolConfiguration.serverAddress = self.endPoint
+            protocolConfiguration.serverAddress = ""
 
             // wgQuickConfig 형식으로 config를 생성
             
@@ -66,6 +66,7 @@ extension VPN {
 
             tunnelManager.protocolConfiguration = protocolConfiguration
             tunnelManager.isEnabled = true
+            tunnelManager.isOnDemandEnabled = false
 
             // tunnel 설정 저장.
             // 기존 터널을 수정하거나, 새로운 터널을 생성함.
@@ -129,6 +130,7 @@ extension VPN {
             SwiftyBeaver.error("tunnelManager.connection is invalid")
             return false
         }
+        tunnelManager.isEnabled = false
         switch session.status {
         case .connected, .connecting, .reasserting:
             SwiftyBeaver.info("Stopping the tunnel")
