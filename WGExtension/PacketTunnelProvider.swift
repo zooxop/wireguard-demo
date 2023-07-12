@@ -127,6 +127,22 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             }
         case .getLog:
             self.sendAPI()
+        case .updateForAll:
+            self.updateForAll { result in
+                if result == false {
+                    completionHandler?(nil)
+                } else {
+                    completionHandler?(Data())
+                }
+            }
+        case .updateForSingle:
+            self.updateForSingle { result in
+                if result == false {
+                    completionHandler?(nil)
+                } else {
+                    completionHandler?(Data())
+                }
+            }
         case .startProcess:
             SwiftyBeaver.debug("Just started to process now! And My PID is : \(getpid())")
             completionHandler?(nil)
@@ -144,6 +160,60 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     override func wake() {
         // Add code here to wake up.
         SwiftyBeaver.info("Here is wake(), PID is : \(getpid())")
+    }
+    
+    private func updateForAll(completionHandler: @escaping (Bool) -> Void) {
+        wireGuard.allowedIPs = "0.0.0.0/0"
+        
+        let builder = WireGuardConfigBuilder(interface: wireGuard.interface!, peer: wireGuard.peer!)
+        guard let wgQuickConfig = builder.build(keepAlive: 25) else {
+            SwiftyBeaver.warning("make wgQuickConfig is failed")
+            completionHandler(false)
+            return
+        }
+        
+        guard let tunnelConfiguration = try? TunnelConfiguration(fromWgQuickConfig: wgQuickConfig) else {
+            log("wg-quick config not parseable")
+            completionHandler(false)
+            return
+        }
+        self.configuration = tunnelConfiguration
+        
+        adapter.update(tunnelConfiguration: tunnelConfiguration) { error in
+            SwiftyBeaver.error(error?.localizedDescription ?? "")
+            if error == nil {
+                completionHandler(false)
+            } else {
+                completionHandler(true)
+            }
+        }
+    }
+    
+    private func updateForSingle(completionHandler: @escaping (Bool) -> Void) {
+        wireGuard.allowedIPs = "192.168.0.2/32"
+        
+        let builder = WireGuardConfigBuilder(interface: wireGuard.interface!, peer: wireGuard.peer!)
+        guard let wgQuickConfig = builder.build(keepAlive: 25) else {
+            SwiftyBeaver.warning("make wgQuickConfig is failed")
+            completionHandler(false)
+            return
+        }
+        
+        guard let tunnelConfiguration = try? TunnelConfiguration(fromWgQuickConfig: wgQuickConfig) else {
+            log("wg-quick config not parseable")
+            completionHandler(false)
+            return
+        }
+        self.configuration = tunnelConfiguration
+        
+        adapter.update(tunnelConfiguration: tunnelConfiguration) { error in
+            SwiftyBeaver.error(error?.localizedDescription ?? "")
+            if error == nil {
+                completionHandler(false)
+            } else {
+                completionHandler(true)
+            }
+        }
     }
     
     private func getRuntimeLog(completionHandler: @escaping (Data?) -> Void) {

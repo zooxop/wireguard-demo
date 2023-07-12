@@ -81,15 +81,20 @@ struct ContentView: View {
                     Button("Start process") {
                         viewModel.startExtensionProcess()
                     }
-                    Button("IP Address") {
-                        viewModel.getIPAddress()
-                    }
                     HStack {
                         Button("Send API on App") {
                             viewModel.sendAPIOnApp()
                         }
                         Button("send API on Extension") {
                             viewModel.sendAPI()
+                        }
+                    }
+                    HStack {
+                        Button("Update for All IPs") {
+                            viewModel.updateForAll()
+                        }
+                        Button("Update for 192.168.0.2/32") {
+                            viewModel.updateForSingle()
                         }
                     }
                 }

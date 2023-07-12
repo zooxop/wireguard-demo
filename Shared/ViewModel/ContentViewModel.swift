@@ -142,6 +142,18 @@ class ContentViewModel: ObservableObject {
         }
     }
     
+    func updateForAll() {
+        vpnManager.updateForAll { result in
+            print(result.description)
+        }
+    }
+    
+    func updateForSingle() {
+        vpnManager.updateForSingle { result in
+            print(result.description)
+        }
+    }
+    
     func sendAPI() {
         vpnManager.send()
     }

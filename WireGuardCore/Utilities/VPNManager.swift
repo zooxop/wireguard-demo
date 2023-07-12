@@ -32,6 +32,28 @@ class VPNManager: ObservableObject {
         }
     }
     
+    /// AllowedIPs 를 0.0.0.0/0 으로 변경.
+    func updateForAll(completion: @escaping (Bool) -> Void) {
+        self.vpn.handleAppMessage(code: TunnelMessageCode.updateForAll) { responseData in
+            guard let _ = responseData else {
+                completion(false)
+                return
+            }
+            completion(true)
+        }
+    }
+    
+    /// AllowedIPs 를 192.168.0.2/32 로 변경.
+    func updateForSingle(completion: @escaping (Bool) -> Void) {
+        self.vpn.handleAppMessage(code: TunnelMessageCode.updateForSingle) { responseData in
+            guard let _ = responseData else {
+                completion(false)
+                return
+            }
+            completion(true)
+        }
+    }
+    
     func send() {
         self.vpn.handleAppMessage(code: .getLog) { responseData in
             guard let _ = responseData else {

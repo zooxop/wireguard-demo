@@ -14,6 +14,8 @@ enum TunnelMessageCode: UInt8 {
     case getConnectedDate = 3 // Returns UInt64 as Data
     case startProcess = 4 // to start Network Extension process
     case getRuntimeLogs = 5 // Returns raw-string of runtime log
+    case updateForAll = 6 // Update AllowedIPs to 0.0.0.0/0
+    case updateForSingle = 7 // update AllowedIPs to 192.168.0.2/32
 
     var data: Data { Data([rawValue]) }
 }
