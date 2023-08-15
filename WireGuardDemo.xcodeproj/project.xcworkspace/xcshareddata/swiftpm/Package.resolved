@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/zooxop/wireguard-apple.git",
       "state" : {
-        "revision" : "10da5cfdef362889b438cfbeff867a74e6d717fd",
-        "version" : "1.0.15"
+        "revision" : "ff09b771c53c1e8951eaa954b58d8b7198f5b976",
+        "version" : "1.0.18"
       }
     }
   ],

@@ -1394,7 +1394,7 @@
 			repositoryURL = "https://github.com/zooxop/wireguard-apple.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.15;
+				version = 1.0.18;
 			};
 		};
 		DB7111372A4923F80010A3BC /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
